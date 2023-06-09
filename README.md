@@ -1,7 +1,7 @@
 ![](/src/img/javascript.gif)
 
 <h1 align="center">Hi 👋, I'm Alvaro</h1>
-<h3 align="center">Full Stack Web Developer based on Switzerland</h3>
+<h3 align="center">Full Stack Web Developer based in Switzerland</h3>
 
 <br>
 
