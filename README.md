@@ -86,6 +86,14 @@ And none of those have been wasted time, in every one I have learnt valuable les
 <img src="https://streak-stats.demolab.com?user=jackgraymer&locale=en&mode=daily&theme=dark&hide_border=false&border_radius=5&order=3" height="250" alt="streak graph"  />
 
 <br>
+ 
+<br>
 
-<img src="https://github-readme-stats.vercel.app/api/top-langs?username=jackgraymer&show_icons=true&locale=en&layout=donut&theme=dark&hide_border=false&border_radius=5&order=3" alt="Alvaro Cervan" height='250' swidth='220'/>
+<img height="250" src="https://github-readme-stats.vercel.app/api/top-langs/?username=jackgraymer&layout=compact&custom_title=Most%20used%20languages&langs_count=10&include_all_commits=true&hide_progress=false&hide_border=false&theme=dark&hide=">
+
+
+  <br>
+
+<!-- <img height="250" src ="https://github-readme-stats.vercel.app/api?username=jackgraymer&show_icons=true&count_private=true&theme=dark&hide_border=false&hide=issues,contribs&bg_color=00000000">
+  <br> -->
 </div>
