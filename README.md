@@ -147,3 +147,9 @@ And none of those have been wasted time, in every one I have learnt valuable les
 <img height="250" src="https://github-readme-stats.vercel.app/api/top-langs/?username=jackgraymer&layout=compact&custom_title=Most%20used%20languages&langs_count=10&include_all_commits=true&hide_progress=false&hide_border=false&theme=dark&hide=">
 
 </div>
+
+<!--
+ https://profile-readme-generator.com/
+
+  https://rahuldkjain.github.io/gh-profile-readme-generator/
+-->
