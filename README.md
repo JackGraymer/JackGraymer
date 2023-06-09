@@ -1,13 +1,18 @@
 ![](/src/img/javascript.gif)
 
-<h1 align="center">Hi 👋, I'm Alvaro Cervan</h1>
+<h1 align="center">Hi 👋, I'm Alvaro</h1>
 <h3 align="center">Full Stack Web Developer based on Switzerland</h3>
 
+<br>
+
 - 🔭 I’m currently working on **my portfolio**
+
 - 🌱 I’m currently learning **more about full stack and back end**
+
 - 👯 I’m looking to collaborate on **projects to help me grow** 🌱
-<!-- - 🤔 I’m looking for help with ... -->
+
 - 💬 Ask me about anything, and I will try to help as best I can
+
 - ⚡ Fun fact: _There are more planes under the sea than submarines in the sky_
 
 - 🌱 I’m currently learning **Full stack and Frameworks to speed up production**
