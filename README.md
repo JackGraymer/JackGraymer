@@ -13,8 +13,6 @@
 </li>
 <li><p>💬 Ask me about anything, and I will try to help as best I can</p>
 </li>
-<li><p>⚡ Fun fact: <em>There are more planes under the sea than submarines in the sky</em></p>
-</li>
 <li><p>🌱 I’m currently learning <strong>Full stack and Frameworks to speed up production</strong></p>
 </li>
 <li><p>📫 How to reach me:</p>
