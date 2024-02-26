@@ -99,8 +99,8 @@ And none of those have been wasted time, in every one I have learnt valuable les
   <img width="12" />
   <!--<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" height="50" alt="Python logo"  />
   <img width="12" />-->
-  <!--<img src="https://cdn.icon-icons.com/icons2/2107/PNG/512/file_type_django_icon_130645.png" height="50" alt="Python logo"  />
-  <img width="12" />-->
+  <img src="https://cdn.icon-icons.com/icons2/2107/PNG/512/file_type_django_icon_130645.png" height="50" alt="Python logo"  />
+  <img width="12" />
   <img src="https://cdn.simpleicons.org/astro/FF5D01" height="50" alt="astro logo"  />
   <img width="12" />
   <img src="https://skillicons.dev/icons?i=pug" height="50" alt="pug logo"  />
@@ -129,6 +129,8 @@ And none of those have been wasted time, in every one I have learnt valuable les
   <img src="https://cdn.simpleicons.org/ubuntu/E95420" height="50" alt="ubuntu logo"  />
   <img width="12" />
   <img src="https://cdn.simpleicons.org/gitkraken/179287" height="50" alt="krakenjs logo"  />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jupyter/jupyter-original-wordmark.svg" height="50" alt="Jupyter logo" />
 </div>
 
 <br>
