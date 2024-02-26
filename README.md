@@ -1,6 +1,6 @@
 <p><img src="https://raw.githubusercontent.com/JackGraymer/JackGraymer/main/src/img/javascript.gif" alt="Javascript Banner"></p>
 <h1 align="center">Hi 👋, I'm Alvaro</h1>
-<h3 align="center">Data Scientist & web developer based in Switzerland</h3>
+<h3 align="center">Data Scientist & Web Developer based in Switzerland</h3>
 
 <br>
 
@@ -73,6 +73,8 @@ And none of those have been wasted time, in every one I have learnt valuable les
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="50" alt="Typescript logo"  />
   <img width="12" />
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="50" alt="Python logo"  />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/r/r-original.svg" height="50" alt="Python logo"  />
   <img width="12" />
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" height="50" alt="html5 logo"  />
   <img width="12" />
