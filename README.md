@@ -1,6 +1,6 @@
 <p><img src="https://raw.githubusercontent.com/JackGraymer/JackGraymer/main/src/img/javascript.gif" alt="Javascript Banner"></p>
 <h1 align="center">Hi 👋, I'm Alvaro</h1>
-<h3 align="center">Full Stack Web Developer based in Switzerland</h3>
+<h3 align="center">Data Scientist & web developer based in Switzerland</h3>
 
 <br>
 
