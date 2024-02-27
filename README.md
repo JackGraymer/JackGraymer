@@ -137,7 +137,10 @@ And none of those have been wasted time, in every one I have learnt valuable les
 
 <h2 id="📈-stats">📈 Stats</h2>
 <div align=center>
-<img src="https://streak-stats.demolab.com?user=jackgraymer&locale=en&mode=daily&theme=dark&hide_border=false&border_radius=5&order=3" height="250" alt="streak graph"  />
+  
+<!--[![GitHub Streak](https://streak-stats.demolab.com?user=jackgraymer&theme=dark&border_radius=5&date_format=j%20M%5B%20Y%5D)](https://git.io/streak-stats)-->
+
+<img src="https://streak-stats.demolab.com?user=jackgraymer&theme=dark&border_radius=5&date_format=j%20M%5B%20Y%5D" alt="GitHub Streak" />
 
 <br>
  
