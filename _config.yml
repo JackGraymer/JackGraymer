@@ -1,4 +1,6 @@
 title: Alvaro Cervan
 subtitle: Data Scientist
 show_downloads: true
-theme: jekyll-theme-minimal
+theme: dark
+light: dark
+mode: dark
