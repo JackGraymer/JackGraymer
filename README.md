@@ -1,69 +1,75 @@
-<p><img src="https://raw.githubusercontent.com/JackGraymer/JackGraymer/main/src/img/javascript.gif" alt="Javascript Banner"></p>
+<p align="center"><img src="https://api.careers.fresenius.com/images/3cba469c-79f7-41bf-981f-ac84a5de8130/6235fee522e168619018ab77051f806ed7b932a976540e80b4e0ca659523df855b02a8cb-e3a2ab78919001b546dc83e16e4dcfcf1df8b95c2d1472dd"></p>
 <h1 align="center">Hi 👋, I'm Alvaro</h1>
-<h3 align="center">Data Scientist & Web Developer based in Switzerland</h3>
+<h3 align="center">Data Scientist & Full Stack Developer based in Switzerland 🇨🇭</h3>
 
 <br>
 
 <ul>
-<li><p>🔭 I’m currently working on <strong>my portfolio</strong></p>
-</li>
-<li><p>🌱 I’m currently learning <strong>more about full stack and back end</strong></p>
-</li>
-<li><p>👯 I’m looking to collaborate on <strong>projects to help me grow</strong> 🌱</p>
-</li>
-<li><p>💬 Ask me about anything, and I will try to help as best I can</p>
-</li>
-<li><p>🌱 I’m currently learning <strong>Full stack and Frameworks to speed up production</strong></p>
-</li>
+<li><p>🔭 I’m currently a finishing my <strong>Master Thesis of Data Science at Mammut AG</strong>, working on quality and product development research</p></li>
+<li><p>📘 Studying a <strong>Master's in Applied Information and Data Science</strong> at HSLU</p></li>
+<li><p>🤖 Built an AI/ML tool at ON AG to predict customs codes for products using structured and unstructured data</p></li>
+<li><p>🌱 Continuously expanding my stack: <strong>ML, Python, R, Django, React, Node, SQL</strong></p></li>
+<li><p>👯 Looking to collaborate on impactful data-driven or full stack projects</p></li>
+<li><p>💬 Ask me about anything tech, data, or development—I love solving problems</p></li>
 <li><p>📫 How to reach me:</p>
-<ul>
-<li><strong><a href="mailto:&#97;&#99;&#x65;&#114;&#118;&#97;&#110;&#x63;&#x61;&#110;&#116;&#x6f;&#x6e;&#x40;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#111;&#x6d;">&#97;&#99;&#x65;&#114;&#118;&#97;&#110;&#x63;&#x61;&#110;&#116;&#x6f;&#x6e;&#x40;&#x67;&#x6d;&#x61;&#x69;&#x6c;&#x2e;&#x63;&#111;&#x6d;</a></strong></li>
-<li><strong><a href="https://www.linkedin.com/in/alvaro-cervan-canton-1085551b3/">LinkedIn</a></strong></li>
-<li><strong><a href="https://github.com/JackGraymer">Github</a></strong></li>
-</ul>
+  <ul>
+    <li><strong><a href="mailto:acervancanton@gmail.com">acervancanton@gmail.com</a></strong></li>
+    <li><strong><a href="https://www.linkedin.com/in/alvaro-cervan-canton-1085551b3/">LinkedIn</a></strong></li>
+    <li><strong><a href="https://github.com/JackGraymer">GitHub</a></strong></li>
+  </ul>
 </li>
 </ul>
-<h2 id="🧔-about-me">🧔 About me</h2>
+
+
+
+<h2 id="🧔-about-me">🧔 About Me</h2>
 <details>
 <summary>Discover more... </summary>
 
-<h3 id="🔥-motivation">🔥 Motivation</h3>
-<p>Computers always attracted my attention, all the information and endless content, programs and games to discover were amazing.
-After a while, it became a common thing to think about (without any technical knowledge) how I would have done it: this game is missing this, this webpage misses that feature, etc.</p>
-<p>So it was more and more exciting to have the skills to one day be able to make those changes or create something from scratch.</p>
-<blockquote>
-<p>The programmers of tomorrow are the <em>wizards of the future</em>.</p>
-</blockquote>
-<blockquote>
-<p>It is the closest thing we have to <strong>super powers</strong>.</p>
-</blockquote>
-<br>
+### 🔥 Motivation
 
-<h3 id="🖥️-the-web-developer-way">🖥️ The Web Developer Way</h3>
-<p>As a kid I always loved videogames and computers, but also outdoors and sports.
-I finally decided to go for a Sport Science degree and a Masters in Education and Teaching.</p>
-<p>Had my time and experience as a teacher, and it was wonderful, a bit stressful but other than that pretty enjoyable and rewarding.</p>
-<p>After deciding to move abroad to 🇨🇭 <strong>Switzerland</strong>, I started a journey to teach myself <strong>Full Stack Web Development</strong>, and found an amazing open source curriculum: <a href="https://www.theodinproject.com/dashboard">The Odin Project</a></p>
-<p>That was early 2022, and after a bit more than a year of studying, reading, watching and following tutorials and doing some projects, I have finally finished the curriculum and ready to move on to the industry.</p>
-<br>
+I've always been fascinated by computers—the infinite content, the creativity, and the power to build anything from scratch. What started as simple curiosity ("this webpage should have this feature", "this game is missing that element") evolved into a deeper desire to *create*, *optimize*, and *understand* how things work under the hood.
 
-<h3 id="🛠️-jack-of-all-trades">🛠️ Jack of All Trades</h3>
-<p>As mentioned before, I got a Bachelor&#39;s and Master&#39;s degree and self education in Web Development.
-But even before that, I have been so many things...
-My entire adult life has beeen full of part-time and summer touching <strong>a lot of areas</strong>, here are some of those:</p>
-<ul>
-<li>Open Source contributor</li>
-<li>Physical Education Teacher</li>
-<li>Software translator</li>
-<li>Construction worker</li>
-<li>Swimming instructor</li>
-<li>Bike mechanic</li>
-<li>Kitchen help</li>
-</ul>
-<p>And then some more. It was a incredible and bumpy ride, but now it&#39;s time to settle down in something more creative and specific.
-And none of those have been wasted time, in every one I have learnt valuable lessons and skills that brought me to be who I am today</p>
+That curiosity matured into a passion for **Data Science**—a field where analytical thinking, problem-solving, and storytelling through data come together. Today, I use code not just to build, but to **find patterns, create models, and drive decisions** with data. 
+
+> "The programmers of tomorrow are the *wizards of the future.*"  
+> It is the closest thing we have to <strong>super powers.
+
+
+
+### 🧠 From Education to Data
+
+My academic path started in a completely different field: **Sport Science** and **Education**. I earned a Bachelor's in Sport Science, then a Master's in Education, and worked as a **Physical Education teacher**. That experience taught me how to communicate effectively, adapt to challenges, and manage diverse, high-pressure environments—skills I now apply in team-based data projects.
+
+When I moved to **Switzerland 🇨🇭**, I decided to pivot and pursue my growing interest in tech. I dove into **Full Stack Web Development** through [The Odin Project](https://www.theodinproject.com/dashboard), an open-source curriculum that helped me build strong programming foundations.
+
+Soon after, I discovered **Data Science**—where my technical skills, educational background, and love for structured thinking came together naturally.
+
+Today, I'm pursuing a **Master’s in Applied Information and Data Science** at Lucerne University of Applied Sciences and Arts. I'm also working at **Mammut AG**, conducting real-world data analysis and research into product quality and innovation.
+
+
+
+### 🛠️ Jack of All Trades, Mastering My Niche
+
+Before entering tech, I worked in a wide variety of roles—from teacher and translator to bike mechanic and construction worker. These experiences shaped how I approach challenges: creatively, practically, and with grit.
+
+Here’s a glimpse of the journey that shaped me:
+
+- 📊 Master's thesis on climbing rope innovation and quality testing at Mammut AG
+- 🤖 Data Science Intern at ON AG — building ML tools to optimize customs processes  
+- 🏃 Physical Education Teacher  
+- 🌍 Exchange student in **Australia**, **Switzerland** and **Slovenia**  
+- 🛠️ Software translator, kitchen assistant, bike mechanic  
+- 💻 Open-source contributor and self-taught web developer  
+
+Each role gave me transferable skills—whether it's attention to detail, cross-cultural communication, or hands-on problem-solving—that I now channel into data science projects.
+
+
+
+Today, I’m focused on becoming a **well-rounded, technically strong, and insight-driven Data Scientist**—bridging the gap between raw data and real-world impact.
+
 </details>
-<br>
+
 
 <h2 id="💻-stack">💻 Stack</h2>
 <h3 id="languages">Languages</h3>
@@ -131,6 +137,10 @@ And none of those have been wasted time, in every one I have learnt valuable les
   <img src="https://cdn.simpleicons.org/gitkraken/179287" height="50" alt="krakenjs logo"  />
   <img width="12" />
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jupyter/jupyter-original-wordmark.svg" height="50" alt="Jupyter logo" />
+  <img width="12" />
+  <img src="https://raw.githubusercontent.com/microsoft/PowerBI-Icons/refs/heads/main/PNG/Power-BI.png" height="50" alt="PowerBI logo"  />
+  <img width="12" />
+  <img src="https://www.svgrepo.com/show/354428/tableau-icon.svg" height="50" alt="tableau logo"  />
 </div>
 
 <br>
