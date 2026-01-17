@@ -23,7 +23,8 @@ jobs:
         uses: rayluo/github-pages-overwriter@v1.3
         with:
           # Directory to publish (default: root). Change if your site generator outputs elsewhere.
-          source-directory: /pages
+          # Use a relative path (no leading slash) so the action reads from the repo workspace.
+          source-directory: pages
           # Branch that will be replaced with the published content (default: gh-pages)
           target-branch: gh-pages
 
