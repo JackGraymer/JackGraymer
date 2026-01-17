@@ -5,7 +5,7 @@
 <br>
 
 <ul>
-<li><p>🔭 I’m currently a finishing my <strong>Master Thesis of Data Science at Mammut AG</strong>, working on quality and product development research</p></li>
+<li><p>🔭 I’m currently finishing my <strong>Master Thesis of Data Science at Mammut AG</strong>, working on quality and product development research</p></li>
 <li><p>📘 Studying a <strong>Master's in Applied Information and Data Science</strong> at HSLU</p></li>
 <li><p>🤖 Built an AI/ML tool at ON AG to predict customs codes for products using structured and unstructured data</p></li>
 <li><p>🌱 Continuously expanding my stack: <strong>ML, Python, R, Django, React, Node, SQL</strong></p></li>
