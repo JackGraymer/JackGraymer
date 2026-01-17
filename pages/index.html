@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Data Scientist — Portfolio</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root{
+            --bg: #111318; /* darker grey */
+            --panel: rgba(255,255,255,0.02);
+            --muted: #9aa7a1;
+            --accent: #39d596; /* bright green */
+            --accent-2: #1eb980;
+            --glass: linear-gradient(135deg, rgba(56,211,159,0.06), rgba(30,185,128,0.03));
+            --glass-border: rgba(56,211,159,0.06);
+            --glass-shadow: 0 6px 24px rgba(2,6,7,0.6);
+            --card-radius: 12px;
+            --max-width: 900px;
+        }
+
+        *{box-sizing:border-box}
+        html,body{height:100%}
+        body{
+            margin:0;
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background: linear-gradient(180deg, #0f1314 0%, var(--bg) 50%);
+            color:#e6f7ef;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            line-height:1.55;
+            padding:48px 20px;
+            display:flex;
+            justify-content:center;
+            align-items:flex-start;
+        }
+
+        .container{
+            width:100%;
+            max-width:var(--max-width);
+        }
+
+        header{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:16px;
+            margin-bottom:32px;
+            flex-wrap:wrap;
+        }
+
+        .brand{
+            display:flex;
+            gap:14px;
+            align-items:center;
+        }
+        .logo{
+            width:48px;
+            height:48px;
+            border-radius:10px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            background:linear-gradient(180deg,var(--accent),var(--accent-2));
+            font-weight:700;
+            font-family: "JetBrains Mono", monospace;
+            color:#06221c;
+            letter-spacing:0.6px;
+            font-size:16px;
+        }
+        .title{display:flex;flex-direction:column}
+        .title .name{font-weight:700; font-size:16px; color:#e8fff6}
+        .title .role{font-size:12px; color:var(--muted)}
+
+        nav{display:flex;gap:12px;align-items:center}
+        nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600;font-size:13px}
+        nav a:hover{color:var(--accent); background:rgba(255,255,255,0.02)}
+
+        /* Make the whole page a single vertical column */
+        main{
+            display:flex;
+            flex-direction:column;
+            gap:28px;
+            align-items:stretch;
+        }
+
+        /* Panels (used for aside and content sections) */
+        .panel{
+            background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            border-radius:var(--card-radius);
+            padding:20px;
+            border:1px solid var(--glass-border);
+            box-shadow:var(--glass-shadow);
+            backdrop-filter: blur(6px) saturate(120%);
+            width:100%;
+        }
+
+        .profile{text-align:center}
+        .avatar{width:110px;height:110px;border-radius:18px;margin:0 auto 12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));display:flex;align-items:center;justify-content:center;font-family:"JetBrains Mono", monospace;font-weight:700;color:var(--accent);font-size:34px;border:1px solid rgba(56,211,159,0.05)}
+        .handle{color:var(--accent); font-weight:700; margin-bottom:6px}
+        .bio{color:var(--muted); font-size:13px; margin-bottom:12px}
+
+        .stats{display:flex;gap:12px;justify-content:center;margin-top:10px}
+        .stat{background:transparent;padding:8px 10px;border-radius:10px;font-size:13px;color:var(--muted);min-width:78px;text-align:center;border:1px solid rgba(255,255,255,0.02)}
+        .stat strong{display:block;color:#e6fff2;font-size:15px}
+
+        .skills{margin-top:18px}
+        .skill-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+        .chip{background:transparent;border:1px solid rgba(56,211,159,0.06);color:var(--muted);padding:6px 10px;border-radius:999px;font-size:13px}
+
+        .content{display:flex;flex-direction:column;gap:18px}
+
+        .hero-card{padding:28px;border-radius:16px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border:1px solid rgba(56,211,159,0.03)}
+        .hero{display:flex;flex-direction:column;gap:14px}
+        .hero-left h1{margin:0;font-size:28px;letter-spacing:-0.4px}
+        .hero-left p{color:var(--muted);margin:8px 0 0;max-width:100%}
+        .cta{display:flex;gap:10px;align-items:center}
+        .btn{background:linear-gradient(180deg,var(--accent),var(--accent-2));color:#032217;padding:10px 14px;border-radius:10px;font-weight:700;border:none;cursor:pointer;font-size:14px;box-shadow:0 8px 30px rgba(30,185,128,0.12)}
+        .ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:600}
+
+        .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:6px}
+        .card{background:transparent;padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.02);transition:transform .16s ease, box-shadow .16s ease}
+        .card:hover{transform:translateY(-6px); box-shadow:0 18px 46px rgba(2,6,7,0.6)}
+        .card h3{margin:0 0 6px;font-size:15px}
+        .card p{margin:0;color:var(--muted);font-size:13px}
+        .meta{display:flex;gap:8px;margin-top:10px;align-items:center}
+        .tag{font-size:12px;color:var(--muted);padding:6px 8px;border-radius:8px;border:1px solid rgba(255,255,255,0.02)}
+        .metrics{margin-left:auto;color:var(--muted);font-size:13px}
+
+        .list-item{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed rgba(255,255,255,0.02)}
+        .list-item:last-child{border-bottom:none}
+        .list-item .left{width:72px;text-align:center;color:var(--accent)}
+        .list-item .right h4{margin:0;font-size:15px}
+        .list-item .right span{font-size:13px;color:var(--muted)}
+
+        footer{margin-top:28px;color:var(--muted);font-size:13px;text-align:center}
+
+        /* Accent helper */
+        .accent-text{color:var(--accent);position:relative;font-weight:700}
+        .accent-text::after{content:"";position:absolute;left:0;right:0;bottom:-0.15em;height:0.6em;background:linear-gradient(90deg, rgba(57,213,150,0.12), rgba(30,185,128,0.04));border-radius:4px;z-index:-1}
+
+        /* Faded section background */
+        .fade-section{background:linear-gradient(90deg, rgba(57,213,150,0.03), transparent);}
+
+        @media (max-width:980px){
+            body{padding:28px 14px}
+            .avatar{width:96px;height:96px}
+            .title .name{font-size:15px}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="brand">
+                <div class="logo">JG</div>
+                <div class="title">
+                    <div class="name">Jack Graymer</div>
+                    <div class="role">Data Scientist — <span class="accent-text">ML</span> | <span class="accent-text">Visualization</span> | Product</div>
+                </div>
+            </div>
+
+            <nav>
+                <a href="#projects">Projects</a>
+                <a href="#skills">Skills</a>
+                <a href="#experience">Experience</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Left column -->
+            <aside class="panel">
+                <section class="profile">
+                    <div class="avatar">JG</div>
+                    <div class="handle">@jackgraymer</div>
+                    <div class="bio">Data Scientist & Full Stack Developer based in Switzerland. Currently finishing a Master thesis at Mammut AG and studying a Master’s in Applied Information and Data Science at HSLU. I build ML tools, analytics products, and full-stack demos.</div>
+
+                    <div class="stats" aria-hidden>
+                        <div class="stat"><strong>10+</strong> yrs experience</div>
+                        <div class="stat"><strong>40+</strong> projects</div>
+                        <div class="stat"><strong>5</strong> publications</div>
+                    </div>
+                </section>
+
+                <section class="skills" id="skills" aria-labelledby="skills-title">
+                    <h4 id="skills-title" style="margin:14px 0 0;color:var(--accent);font-size:13px">Core skills</h4>
+                    <div class="skill-list">
+                        <div class="chip">Python</div>
+                        <div class="chip">Pandas</div>
+                        <div class="chip">Scikit-learn</div>
+                        <div class="chip">PyTorch</div>
+                        <div class="chip">SQL</div>
+                        <div class="chip">DVC</div>
+                        <div class="chip">Dagster</div>
+                        <div class="chip">Streamlit</div>
+                        <div class="chip">Tableau</div>
+                    </div>
+
+                    <h4 style="margin:14px 0 0;color:var(--accent);font-size:13px">Interests</h4>
+                    <div class="skill-list" style="margin-top:8px">
+                        <div class="chip">Causal Inference</div>
+                        <div class="chip">Time Series</div>
+                        <div class="chip">Recommenders</div>
+                        <div class="chip">MLOps</div>
+                    </div>
+                </section>
+
+                <section style="margin-top:16px">
+                    <a class="btn" href="#contact" style="width:100%;display:inline-flex;justify-content:center">Work with me</a>
+                </section>
+            </aside>
+
+            <!-- Right column -->
+            <section class="content">
+                <div class="hero-card hero" role="banner">
+                    <div class="hero-left">
+                        <h1>Data science that moves <span class="accent-text">product</span> forward</h1>
+                        <p>Combining robust modeling, repeatable pipelines, and concise visualization to deliver measurable impact. I focus on production-ready solutions and stakeholder-facing insights.</p>
+                    </div>
+                    <div class="cta">
+                        <button class="btn" onclick="document.location='#projects'">See projects</button>
+                        <button class="ghost" onclick="document.location='#contact'">Get in touch</button>
+                    </div>
+                </div>
+
+                <div class="panel" id="projects">
+                    <h3 style="margin:0 0 8px; color:var(--accent)">Selected projects</h3>
+                    <p style="margin:0 0 12px; color:var(--muted); font-size:13px">A few production and research pieces—click to explore code, slides, or demos.</p>
+
+                    <div class="grid">
+                        <!-- Selected GitHub repos -->
+                        <article class="card" aria-labelledby="repo-advanced-genai">
+                            <h3 id="repo-advanced-genai"><a href="https://github.com/JackGraymer/Advanced-GenAI" target="_blank" rel="noopener">Advanced-GenAI</a></h3>
+                            <p>Advanced GenAI HSLU — experiments and notebooks exploring generative models.</p>
+                            <div class="meta">
+                                <span class="tag">Jupyter Notebook</span>
+                                <div class="metrics">★ 0</div>
+                            </div>
+                        </article>
+
+                        <article class="card" aria-labelledby="repo-face-recognition">
+                            <h3 id="repo-face-recognition"><a href="https://github.com/JackGraymer/Face-Recognition" target="_blank" rel="noopener">Face-Recognition</a></h3>
+                            <p>Face recognition experiments and pipelines — notebooks and models for image-based identification.</p>
+                            <div class="meta">
+                                <span class="tag">Jupyter Notebook</span>
+                                <div class="metrics">★ 0</div>
+                            </div>
+                        </article>
+
+                        <article class="card" aria-labelledby="repo-portfolio">
+                            <h3 id="repo-portfolio"><a href="https://github.com/JackGraymer/portfolio" target="_blank" rel="noopener">portfolio</a></h3>
+                            <p>Web developer portfolio built with Astro — the site that hosts this work and demos.</p>
+                            <div class="meta">
+                                <span class="tag">Astro</span>
+                                <div class="metrics">★ 0</div>
+                            </div>
+                        </article>
+                        <article class="card" aria-labelledby="p1">
+                            <h3 id="p1">Customer Churn Predictor</h3>
+                            <p>Ensemble model and automated retraining pipeline for subscription churn. Deployed with CI/CD and monitoring.</p>
+                            <div class="meta">
+                                <span class="tag">ML</span>
+                                <span class="tag">MLOps</span>
+                                <div class="metrics">ROC AUC 0.87</div>
+                            </div>
+                        </article>
+
+                        <article class="card" aria-labelledby="p2">
+                            <h3 id="p2">Realtime Anomaly Detection</h3>
+                            <p>Streaming anomaly detection with feature stores, alerts, and a lightweight dashboard for ops.</p>
+                            <div class="meta">
+                                <span class="tag">Streaming</span>
+                                <span class="tag">Kafka</span>
+                                <div class="metrics">Latency &lt; 250ms</div>
+                            </div>
+                        </article>
+
+                        <article class="card" aria-labelledby="p3">
+                            <h3 id="p3">Visual Analytics Dashboard</h3>
+                            <p>Interactive dashboard that surfaces cohort trends and revenue drivers for product teams.</p>
+                            <div class="meta">
+                                <span class="tag">Viz</span>
+                                <span class="tag">Dashboards</span>
+                                <div class="metrics">Used weekly by 3 teams</div>
+                            </div>
+                        </article>
+
+                        <article class="card" aria-labelledby="p4">
+                            <h3 id="p4">Time-series Forecasting</h3>
+                            <p>Hierarchical forecasting stack for demand planning, includes uncertainty quantification and backtests.</p>
+                            <div class="meta">
+                                <span class="tag">Time Series</span>
+                                <span class="tag">Prophet</span>
+                                <div class="metrics">MAPE 6.2%</div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <div class="panel" id="experience">
+                    <h3 style="margin:0 0 8px; color:var(--accent)">Experience</h3>
+                    <div style="margin-top:12px">
+                        <div class="list-item">
+                            <div class="left">2021–Now</div>
+                            <div class="right">
+                                <h4>Senior Data Scientist — Acme Labs</h4>
+                                <span>Built core ML services, drove adoption of model monitoring and feature stores across product org.</span>
+                            </div>
+                        </div>
+
+                        <div class="list-item">
+                            <div class="left">2017–2021</div>
+                            <div class="right">
+                                <h4>Data Scientist — BrightMetrics</h4>
+                                <span>Delivered decision support modeling and visualization for growth and finance teams.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel" id="contact">
+                    <h3 style="margin:0 0 8px; color:var(--accent)">Contact</h3>
+                    <p style="margin:0 0 12px; color:var(--muted)">Open to collaborations, contract work, and full-time roles.</p>
+
+                    <form onsubmit="event.preventDefault(); alert('Email: jack@example.com — LinkedIn: /in/jackgraymer')">
+                        <div style="display:flex;gap:8px;margin-bottom:8px">
+                            <input required placeholder="Your name" style="flex:1;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit">
+                            <input required type="email" placeholder="Email" style="flex:1;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit">
+                        </div>
+                        <textarea required placeholder="Brief message" rows="4" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit"></textarea>
+                        <div style="display:flex;justify-content:flex-end;margin-top:10px">
+                            <button class="btn" type="submit">Send</button>
+                        </div>
+                    </form>
+
+                    <div style="margin-top:12px;color:var(--muted);font-size:13px">
+                        Email: <a href="mailto:acervancanton@gmail.com" style="color:var(--accent)">acervancanton@gmail.com</a> · LinkedIn: <a href="https://www.linkedin.com/in/alvaro-cervan-canton-1085551b3/" target="_blank" rel="noopener" style="color:var(--accent)">/in/alvaro-cervan-canton</a>
+                    </div>
+                </div>
+
+                <footer>
+                    © Jack Graymer — Data Science portfolio • Built with intent, shipped with tests.
+                </footer>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
