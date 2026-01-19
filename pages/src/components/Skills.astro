@@ -1,0 +1,37 @@
+---
+const skills = [
+  {
+    category: "Programming",
+    items: ["Python", "R", "SQL", "JavaScript", "HTML/CSS", "Markdown", "Django", "React", "Node.js"]
+  },
+  {
+    category: "Data & Tools",
+    items: ["Tableau", "Power BI", "Streamlit", "Quarto", "MongoDB", "Microsoft Office", "Dynamics 365", "Linux"]
+  },
+  {
+    category: "Soft Skills",
+    items: ["Strategic Problem-Solving", "Critical Thinking", "Proactive Execution", "Adaptability to Change", "Clear Communication"]
+  }
+];
+---
+
+<section id="skills" class="px-4 py-20 bg-gray-50 dark:bg-gray-800/50">
+  <div class="max-w-6xl mx-auto text-center">
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-12">Skills</h2>
+
+    <div class="grid md:grid-cols-3 gap-8">
+      {skills.map((skillGroup) => (
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 h-full hover:shadow-md transition-shadow">
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6">{skillGroup.category}</h3>
+          <div class="flex flex-wrap gap-2 justify-center">
+            {skillGroup.items.map(item => (
+              <span class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors cursor-default">
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

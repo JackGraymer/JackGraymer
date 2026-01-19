@@ -1,0 +1,67 @@
+---
+const education = [
+  {
+    degree: "Master of Science in Applied Information and Data Science",
+    school: "Lucerne University of Applied Sciences and Arts",
+    location: "Luzern",
+    period: "2024 – present",
+    description: [
+      "Extract value from complex data to drive informed decisions and create measurable impact across organizations",
+      "Build predictive models to shape future outcomes while aligning with legal, ethical, and business requirements"
+    ]
+  },
+  {
+    degree: "Full Stack Web Development",
+    school: "The Odin Project",
+    location: "Online",
+    period: "2022 – 2023",
+    description: [
+      "Developed full-stack apps using Python and JavaScript to solve real-world problems with scalable code architecture",
+       "Applied open-source tools and frameworks to create responsive and accessible user-centered digital experiences"
+    ]
+  },
+  {
+    degree: "Masters in Education",
+    school: "University of Malaga",
+    location: "Malaga",
+    period: "2019 – 2020",
+    description: [
+      "Collaborated with stakeholders to deliver institution-wide programs that enhance teaching practice and education"
+    ]
+  },
+  {
+    degree: "Bachelor in Sport Science",
+    school: "University of Granada",
+    location: "Granada",
+    period: "2014 – 2019",
+    description: [
+      "Studied human movement, sport theory and performance with insights from psychology, physiology and biomechanics"
+    ]
+  }
+];
+---
+
+<section id="education" class="px-4 py-20 max-w-4xl mx-auto">
+  <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-12 text-center">Education</h2>
+
+  <div class="space-y-8">
+    {education.map((edu) => (
+      <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col md:flex-row gap-6 hover:shadow-md transition-shadow">
+        <div class="md:w-1/4">
+           <span class="inline-block px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm font-medium whitespace-nowrap mb-2 md:mb-0">
+             {edu.period}
+           </span>
+        </div>
+        <div class="md:w-3/4">
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">{edu.degree}</h3>
+          <div class="text-gray-600 dark:text-gray-400 font-medium mb-3">{edu.school} <span class="text-gray-400 dark:text-gray-600">• {edu.location}</span></div>
+          <ul class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+            {edu.description.map(item => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

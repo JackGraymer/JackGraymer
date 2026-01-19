@@ -4,7 +4,7 @@ on:
   push:
     branches:
       # NOTE: You may want to limit the trigger branch to be "main" or "master" etc.
-      - '*'
+      - "*"
 
 jobs:
   publish:
@@ -24,7 +24,6 @@ jobs:
         with:
           # Directory to publish (default: root). Change if your site generator outputs elsewhere.
           # Use a relative path (no leading slash) so the action reads from the repo workspace.
-          source-directory: pages
+          source-directory: pages/public
           # Branch that will be replaced with the published content (default: gh-pages)
           target-branch: gh-pages
-

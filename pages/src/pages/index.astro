@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Experience from '../components/Experience.astro';
+import Skills from '../components/Skills.astro';
+import Education from '../components/Education.astro';
+import Contact from '../components/Contact.astro';
+---
+
+<Layout title="Alvaro Cervan | Data Scientist & Developer">
+	<Header />
+	<main>
+		<Hero />
+		<About />
+		<Experience />
+		<Skills />
+		<Education />
+		<Contact />
+	</main>
+	<footer class="bg-gray-50 dark:bg-gray-900 py-8 text-center text-gray-500 dark:text-gray-400 text-sm border-t border-gray-100 dark:border-gray-800">
+		<p>&copy; {new Date().getFullYear()} Alvaro Cervan. All rights reserved.</p>
+	</footer>
+</Layout>
