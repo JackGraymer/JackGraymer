@@ -1,0 +1,245 @@
+---
+import { getCollection } from 'astro:content';
+
+const allProjects = await getCollection('projects');
+const projects = allProjects.sort((a, b) => a.data.order - b.data.order);
+---
+
+<section id="projects" class="px-4 py-20 max-w-6xl mx-auto">
+  <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-12 text-center">Portfolio</h2>
+
+  <!-- Grid Layout -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {projects.map((project) => (
+      <div 
+        class="group cursor-pointer bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+        data-project-id={project.slug}
+      >
+        <!-- Thumbnail Container -->
+        <div class="relative aspect-video overflow-hidden">
+          <img 
+            src={project.data.thumbnail} 
+            alt={project.data.title}
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          />
+          <!-- Category Badge -->
+          <div class="absolute top-4 left-4">
+            <span class="px-3 py-1 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm text-gray-800 dark:text-gray-200 text-xs font-bold rounded-lg uppercase tracking-wider">
+              {project.data.category}
+            </span>
+          </div>
+          <!-- Brand Logo Overlay (Optional) -->
+          {project.data.brandLogo && (
+            <div class="absolute bottom-4 right-4 w-10 h-10 bg-white dark:bg-gray-700 rounded-full p-1.5 shadow-lg border border-gray-100 dark:border-gray-800 flex items-center justify-center">
+              <img src={project.data.brandLogo} alt={project.data.company} class="max-w-full max-h-full object-contain" />
+            </div>
+          )}
+        </div>
+
+        <!-- Card Content -->
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors">
+            {project.data.title}
+          </h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm line-clamp-2 mb-4">
+            {project.data.description}
+          </p>
+          
+          <!-- Tags -->
+          <div class="flex flex-wrap gap-2">
+            {project.data.tags.slice(0, 3).map(tag => (
+              <span class="px-2 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-md text-xs font-medium">
+                {tag}
+              </span>
+            ))}
+            {project.data.tags.length > 3 && (
+              <span class="text-xs text-gray-400 dark:text-gray-500 self-center">+{project.data.tags.length - 3}</span>
+            )}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- Modals -->
+  {projects.map(async (project) => {
+    const { Content } = await project.render();
+    return (
+      <div 
+        id={`modal-${project.slug}`} 
+        class="project-modal fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/60 backdrop-blur-md transition-opacity duration-300 opacity-0"
+      >
+        <div class="bg-white dark:bg-gray-900 w-full max-w-4xl max-h-[90vh] rounded-3xl overflow-hidden shadow-2xl flex flex-col relative transform scale-95 transition-transform duration-300">
+          
+          <!-- Close Button -->
+          <button 
+            class="close-modal absolute top-4 right-4 z-10 p-2 bg-black/20 hover:bg-black/40 text-white rounded-full transition-colors backdrop-blur-sm"
+            aria-label="Close modal"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+
+          <div class="overflow-y-auto custom-scrollbar">
+            <!-- Banner -->
+            <div class="w-full aspect-video md:aspect-[21/9] relative">
+              <img 
+                src={project.data.banner} 
+                alt={project.data.title} 
+                class="w-full h-full object-cover"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+                <div class="p-8">
+                  <span class="inline-block px-3 py-1 bg-white/20 backdrop-blur-md text-white border border-white/30 rounded-full text-xs font-bold uppercase tracking-widest mb-3">
+                    {project.data.category}
+                  </span>
+                  <h2 class="text-3xl md:text-5xl font-bold text-white tracking-tight leading-tight">
+                    {project.data.title}
+                  </h2>
+                </div>
+              </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="p-8 md:p-12">
+              <div class="flex flex-col md:flex-row gap-8">
+                <!-- Main Info -->
+                <div class="md:w-3/4">
+                  <div class="prose prose-lg dark:prose-invert max-w-none">
+                    <Content />
+                  </div>
+                </div>
+
+                <!-- Sidebar Details -->
+                <div class="md:w-1/4 space-y-8">
+                  <div>
+                    <h4 class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-4">Tech Stack</h4>
+                    <div class="flex flex-wrap gap-2">
+                      {project.data.tags.map(tag => (
+                        <span class="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg text-sm font-medium">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {project.data.company && (
+                    <div>
+                      <h4 class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-4">Collaborated With</h4>
+                      <div class="flex items-center gap-3">
+                        {project.data.brandLogo && (
+                          <img src={project.data.brandLogo} alt={project.data.company} class="w-10 h-10 object-contain rounded-lg bg-gray-50 dark:bg-gray-800 p-1" />
+                        )}
+                        <span class="text-gray-900 dark:text-white font-medium">{project.data.company}</span>
+                      </div>
+                    </div>
+                  )}
+
+                  <div class="flex flex-col gap-3 pt-4">
+                    {project.data.githubUrl && (
+                      <a 
+                        href={project.data.githubUrl} 
+                        target="_blank" 
+                        class="flex items-center justify-center gap-2 px-6 py-3 bg-black dark:bg-white text-white dark:text-black rounded-xl font-bold hover:opacity-90 transition-opacity"
+                      >
+                        GitHub Repo
+                      </a>
+                    )}
+                    {project.data.liveUrl && (
+                      <a 
+                        href={project.data.liveUrl} 
+                        target="_blank" 
+                        class="flex items-center justify-center gap-2 px-6 py-3 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl font-bold hover:bg-gray-50 dark:hover:bg-gray-800 transition-all"
+                      >
+                        Launch Project
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Gallery Section (Optional) -->
+              {project.data.gallery && project.data.gallery.length > 0 && (
+                <div class="mt-16">
+                  <h4 class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-8 text-center">Project Gallery</h4>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {project.data.gallery.map(img => (
+                      <img src={img} alt="Project detail" class="w-full rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800" />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  })}
+</section>
+
+<style>
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #e2e8f0;
+    border-radius: 10px;
+  }
+  .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #334155;
+  }
+  
+  .project-modal.show {
+    display: flex;
+    opacity: 1;
+  }
+  .project-modal.show > div {
+    transform: scale(1);
+  }
+</style>
+
+<script>
+  // Modal Logic
+  const gridCards = document.querySelectorAll('[data-project-id]');
+  const modals = document.querySelectorAll('.project-modal');
+  const body = document.body;
+
+  gridCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const id = card.getAttribute('data-project-id');
+      const modal = document.getElementById(`modal-${id}`);
+      if (modal) {
+        modal.classList.add('show');
+        body.style.overflow = 'hidden';
+      }
+    });
+  });
+
+  modals.forEach(modal => {
+    // Close on overlay click
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal(modal);
+    });
+
+    // Close Button
+    const closeBtn = modal.querySelector('.close-modal');
+    closeBtn?.addEventListener('click', () => closeModal(modal));
+  });
+
+  // Close on Escape key
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const openModal = document.querySelector('.project-modal.show');
+      if (openModal) closeModal(openModal);
+    }
+  });
+
+  function closeModal(modal) {
+    modal.classList.remove('show');
+    body.style.overflow = '';
+  }
+</script>
