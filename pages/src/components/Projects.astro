@@ -1,26 +1,57 @@
 ---
 import { getCollection } from 'astro:content';
+import { getImage } from 'astro:assets';
 
 const allProjects = await getCollection('projects');
-const projects = allProjects.sort((a, b) => a.data.order - b.data.order);
+const sortedProjects = allProjects.sort((a, b) => a.data.order - b.data.order);
+
+// Helper to make paths relative
+const fixPath = (path) => path.startsWith('/') ? path.slice(1) : path;
+
+// Pre-process all images to WebP and fix paths
+const projects = await Promise.all(sortedProjects.map(async (project) => {
+  const thumbnail = await getImage({ src: project.data.thumbnail, format: 'webp' });
+  const banner = await getImage({ src: project.data.banner, format: 'webp' });
+  
+  let brandLogo = null;
+  if (project.data.brandLogo) {
+    brandLogo = await getImage({ src: project.data.brandLogo, format: 'webp' });
+  }
+
+  let gallery = [];
+  if (project.data.gallery) {
+    gallery = await Promise.all(project.data.gallery.map(img => getImage({ src: img, format: 'webp' })));
+  }
+
+  return {
+    ...project,
+    optimized: {
+      thumbnail: fixPath(thumbnail.src),
+      banner: fixPath(banner.src),
+      brandLogo: brandLogo ? fixPath(brandLogo.src) : null,
+      gallery: gallery.map(img => fixPath(img.src)),
+      carousel: [fixPath(banner.src), ...gallery.map(img => fixPath(img.src))]
+    }
+  };
+}));
 ---
 
 <section id="projects" class="px-4 py-20 max-w-6xl mx-auto">
-  <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-12 text-center">Portfolio</h2>
+  <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-12 text-center">Projects</h2>
 
   <!-- Grid Layout -->
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     {projects.map((project) => (
       <div 
-        class="group cursor-pointer bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+        class="group cursor-pointer bg-white dark:bg-gray-800 rounded-2xl overflow-hidden isolate transform-gpu fix-clipping shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
         data-project-id={project.slug}
       >
         <!-- Thumbnail Container -->
-        <div class="relative aspect-video overflow-hidden">
+        <div class="relative aspect-video overflow-hidden rounded-t-2xl isolate fix-clipping">
           <img 
-            src={project.data.thumbnail} 
+            src={project.optimized.thumbnail} 
             alt={project.data.title}
-            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 will-change-transform"
           />
           <!-- Category Badge -->
           <div class="absolute top-4 left-4">
@@ -31,7 +62,7 @@ const projects = allProjects.sort((a, b) => a.data.order - b.data.order);
           <!-- Brand Logo Overlay (Optional) -->
           {project.data.brandLogo && (
             <div class="absolute bottom-4 right-4 w-10 h-10 bg-white dark:bg-gray-700 rounded-full p-1.5 shadow-lg border border-gray-100 dark:border-gray-800 flex items-center justify-center">
-              <img src={project.data.brandLogo} alt={project.data.company} class="max-w-full max-h-full object-contain" />
+              <img src={project.optimized.brandLogo} alt={project.data.company} class="max-w-full max-h-full object-contain" />
             </div>
           )}
         </div>
@@ -82,14 +113,44 @@ const projects = allProjects.sort((a, b) => a.data.order - b.data.order);
           </button>
 
           <div class="overflow-y-auto custom-scrollbar">
-            <!-- Banner -->
-            <div class="w-full aspect-video md:aspect-[21/9] relative">
+            <!-- Banner Carousel -->
+            <div 
+              class="project-carousel w-full aspect-video md:aspect-[21/9] relative group/carousel" 
+              data-images={JSON.stringify(project.optimized.carousel)}
+            >
               <img 
-                src={project.data.banner} 
+                id={`hero-${project.slug}`}
+                src={project.optimized.carousel[0]} 
                 alt={project.data.title} 
-                class="w-full h-full object-cover"
+                class="carousel-img w-full h-full object-cover transition-opacity duration-300"
               />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+
+              {/* Navigation Arrows (Only if more than 1 image) */}
+              {project.optimized.carousel.length > 1 && (
+                <>
+                  <button class="carousel-prev absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/20 hover:bg-black/40 text-white backdrop-blur-sm opacity-0 group-hover/carousel:opacity-100 transition-all -translate-x-4 group-hover/carousel:translate-x-0 outline-none" aria-label="Previous image">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                  </button>
+                  <button class="carousel-next absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/20 hover:bg-black/40 text-white backdrop-blur-sm opacity-0 group-hover/carousel:opacity-100 transition-all translate-x-4 group-hover/carousel:translate-x-0 outline-none" aria-label="Next image">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+
+                  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2.5 z-10">
+                    {project.optimized.carousel.map((_, i) => (
+                      <div 
+                        class={`indicator-dot w-2 h-2 rounded-full transition-all duration-300 ${i === 0 ? 'bg-white scale-125' : 'bg-white/30'}`} 
+                        data-index={i}
+                      ></div>
+                    ))}
+                  </div>
+                </>
+              )}
+
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none flex items-end">
                 <div class="p-8">
                   <span class="inline-block px-3 py-1 bg-white/20 backdrop-blur-md text-white border border-white/30 rounded-full text-xs font-bold uppercase tracking-widest mb-3">
                     {project.data.category}
@@ -129,7 +190,7 @@ const projects = allProjects.sort((a, b) => a.data.order - b.data.order);
                       <h4 class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-4">Collaborated With</h4>
                       <div class="flex items-center gap-3">
                         {project.data.brandLogo && (
-                          <img src={project.data.brandLogo} alt={project.data.company} class="w-10 h-10 object-contain rounded-lg bg-gray-50 dark:bg-gray-800 p-1" />
+                          <img src={project.optimized.brandLogo} alt={project.data.company} class="w-10 h-10 object-contain rounded-lg bg-gray-50 dark:bg-gray-800 p-1" />
                         )}
                         <span class="text-gray-900 dark:text-white font-medium">{project.data.company}</span>
                       </div>
@@ -159,17 +220,6 @@ const projects = allProjects.sort((a, b) => a.data.order - b.data.order);
                 </div>
               </div>
 
-              <!-- Gallery Section (Optional) -->
-              {project.data.gallery && project.data.gallery.length > 0 && (
-                <div class="mt-16">
-                  <h4 class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-8 text-center">Project Gallery</h4>
-                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {project.data.gallery.map(img => (
-                      <img src={img} alt="Project detail" class="w-full rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800" />
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </div>
@@ -177,6 +227,35 @@ const projects = allProjects.sort((a, b) => a.data.order - b.data.order);
     );
   })}
 </section>
+
+<!-- Full-screen Lightbox Overlay -->
+<div id="lightbox" class="fixed inset-0 z-[200] hidden items-center justify-center bg-black/95 backdrop-blur-2xl opacity-0 transition-opacity duration-300">
+  <button id="lightbox-close" class="absolute top-6 right-6 z-[220] p-4 text-white/50 hover:text-white transition-colors" aria-label="Close lightbox">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </button>
+
+  <button id="lightbox-prev" class="absolute left-6 top-1/2 -translate-y-1/2 p-5 rounded-full bg-white/5 hover:bg-white/10 text-white backdrop-blur-md transition-all outline-none z-[220]" aria-label="Previous image">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+    </svg>
+  </button>
+
+  <button id="lightbox-next" class="absolute right-6 top-1/2 -translate-y-1/2 p-5 rounded-full bg-white/5 hover:bg-white/10 text-white backdrop-blur-md transition-all outline-none z-[220]" aria-label="Next image">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+    </svg>
+  </button>
+
+  <div class="w-full h-full p-2 sm:p-4 md:p-12 flex items-center justify-center pointer-events-none">
+    <img id="lightbox-img" src="" alt="Enlarged view" class="max-w-full max-h-full w-auto h-auto object-contain shadow-2xl pointer-events-auto" />
+  </div>
+
+  <div id="lightbox-dots" class="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-4 z-[220]">
+    <!-- Dots generated by JS -->
+  </div>
+</div>
 
 <style>
   .custom-scrollbar::-webkit-scrollbar {
@@ -199,6 +278,46 @@ const projects = allProjects.sort((a, b) => a.data.order - b.data.order);
   }
   .project-modal.show > div {
     transform: scale(1);
+  }
+
+  /* Robust fix for rounded corner clipping during transitions/transforms */
+  .fix-clipping {
+    -webkit-mask-image: -webkit-radial-gradient(white, white);
+    mask-image: -webkit-radial-gradient(white, white);
+    backface-visibility: hidden;
+  }
+
+  /* Lightbox Styles */
+  #lightbox.show {
+    display: flex;
+    opacity: 1;
+  }
+  #lightbox.show img {
+    transform: scale(1);
+    opacity: 1;
+  }
+  #lightbox img {
+    transform: scale(0.95);
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease-out;
+  }
+
+  /* Mobile Landscape / Short Screens */
+  @media (max-height: 480px) {
+    #lightbox > div:first-of-type {
+      padding: 0.5rem !important;
+    }
+    #lightbox-dots {
+      display: none;
+    }
+    #lightbox-prev, #lightbox-next {
+      background: rgba(0,0,0,0.3);
+      padding: 0.75rem !important;
+    }
+    #lightbox-prev svg, #lightbox-next svg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
   }
 </style>
 
@@ -242,4 +361,154 @@ const projects = allProjects.sort((a, b) => a.data.order - b.data.order);
     modal.classList.remove('show');
     body.style.overflow = '';
   }
+
+  // Carousel Logic
+  const carousels = document.querySelectorAll('.project-carousel');
+
+  carousels.forEach(carousel => {
+    const images = JSON.parse(carousel.getAttribute('data-images') || '[]');
+    if (images.length <= 1) return;
+
+    const imgElement = carousel.querySelector('.carousel-img');
+    const dots = carousel.querySelectorAll('.indicator-dot');
+    const prevBtn = carousel.querySelector('.carousel-prev');
+    const nextBtn = carousel.querySelector('.carousel-next');
+    
+    let currentIndex = 0;
+
+    function updateCarousel(newIndex) {
+      currentIndex = (newIndex + images.length) % images.length;
+      
+      // Fade out
+      imgElement.style.opacity = '0';
+      
+      setTimeout(() => {
+        imgElement.src = images[currentIndex];
+        imgElement.style.opacity = '1';
+        
+        // Update dots
+        dots.forEach((dot, i) => {
+          if (i === currentIndex) {
+            dot.classList.add('bg-white', 'scale-125');
+            dot.classList.remove('bg-white/30');
+          } else {
+            dot.classList.remove('bg-white', 'scale-125');
+            dot.classList.add('bg-white/30');
+          }
+        });
+      }, 300);
+    }
+
+    prevBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      updateCarousel(currentIndex - 1);
+    });
+
+    nextBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      updateCarousel(currentIndex + 1);
+    });
+
+    // Keyboard navigation (only if this carousel's modal is open)
+    window.addEventListener('keydown', (e) => {
+      const modal = carousel.closest('.project-modal');
+      const lightbox = document.getElementById('lightbox');
+      if (!modal?.classList.contains('show') || lightbox?.classList.contains('show')) return;
+
+      if (e.key === 'ArrowLeft') updateCarousel(currentIndex - 1);
+      if (e.key === 'ArrowRight') updateCarousel(currentIndex + 1);
+    });
+
+    // Lightbox open trigger
+    imgElement.addEventListener('click', () => {
+      openLightbox(images, currentIndex, (newIndex) => {
+        updateCarousel(newIndex);
+      });
+    });
+  });
+
+  // Lightbox Logic
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxDots = document.getElementById('lightbox-dots');
+  const lightboxPrev = document.getElementById('lightbox-prev');
+  const lightboxNext = document.getElementById('lightbox-next');
+  const lightboxClose = document.getElementById('lightbox-close');
+
+  let lightboxImages = [];
+  let lightboxIndex = 0;
+  let onLightboxChange = null;
+
+  function openLightbox(images, index, callback) {
+    lightboxImages = images;
+    lightboxIndex = index;
+    onLightboxChange = callback;
+
+    renderLightboxDots();
+    updateLightbox(index);
+    
+    lightbox.classList.add('show');
+    body.style.overflow = 'hidden';
+  }
+
+  function renderLightboxDots() {
+    lightboxDots.innerHTML = lightboxImages.map((_, i) => `
+      <div class="lightbox-dot w-2.5 h-2.5 rounded-full transition-all duration-300 ${i === lightboxIndex ? 'bg-white scale-125' : 'bg-white/30'}" data-index="${i}"></div>
+    `).join('');
+  }
+
+  function updateLightbox(newIndex) {
+    lightboxIndex = (newIndex + lightboxImages.length) % lightboxImages.length;
+    
+    lightboxImg.style.opacity = '0';
+    lightboxImg.style.transform = 'scale(0.98)';
+    
+    setTimeout(() => {
+      lightboxImg.src = lightboxImages[lightboxIndex];
+      lightboxImg.style.opacity = '1';
+      lightboxImg.style.transform = 'scale(1)';
+      
+      const dots = lightboxDots.querySelectorAll('.lightbox-dot');
+      dots.forEach((dot, i) => {
+        if (i === lightboxIndex) {
+          dot.classList.add('bg-white', 'scale-125');
+          dot.classList.remove('bg-white/30');
+        } else {
+          dot.classList.remove('bg-white', 'scale-125');
+          dot.classList.add('bg-white/30');
+        }
+      });
+
+      if (onLightboxChange) onLightboxChange(lightboxIndex);
+    }, 150);
+  }
+
+  lightboxPrev?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    updateLightbox(lightboxIndex - 1);
+  });
+
+  lightboxNext?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    updateLightbox(lightboxIndex + 1);
+  });
+
+  lightboxClose?.addEventListener('click', () => {
+    lightbox.classList.remove('show');
+    // Keep body overflow hidden because the project modal is still open
+  });
+
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox || e.target.parentElement === lightbox) {
+      lightbox.classList.remove('show');
+    }
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('show')) return;
+    
+    if (e.key === 'Escape') lightbox.classList.remove('show');
+    if (e.key === 'ArrowLeft') updateLightbox(lightboxIndex - 1);
+    if (e.key === 'ArrowRight') updateLightbox(lightboxIndex + 1);
+  });
 </script>

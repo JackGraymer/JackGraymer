@@ -2,7 +2,7 @@
 title: "ADVANCED MULTILINGUAL RAG SYSTEM"
 order: 10
 company: "ETH Zurich & Google DeepMind"
-brandLogo: "../../assets/brands/eth-google-logo.png"
+brandLogo: "../assets/rag_1.jpg"
 description: "A high-performance end-to-end RAG system built to extract and synthesize information from multilingual news datasets, featuring hybrid retrieval and GraphRAG."
 publishDate: 2024-11-20
 category: "GenAI / NLP"
