@@ -2,52 +2,72 @@
 title: "ADVANCED MULTILINGUAL RAG SYSTEM"
 order: 10
 company: "ETH Zurich & Google DeepMind"
-brandLogo: "../assets/rag_1.jpg"
+brandLogo: "../assets/google-logo.png"
 description: "A high-performance end-to-end RAG system built to extract and synthesize information from multilingual news datasets, featuring hybrid retrieval and GraphRAG."
 publishDate: 2024-11-20
 category: "GenAI / NLP"
-tags: ["Python", "GenAI", "RAG", "GraphRAG", "Vector Search", "GPT-4o"]
-thumbnail: "../assets/rag_2.jpg"
-banner: "../assets/rag_banner.png"
+tags: ["Python", "GenAI", "RAG", "NLP", "GraphRAG", "Vector Search", "GPT-4o"]
+thumbnail: "../assets/rag_banner.png"
+banner: "../assets/Evaluation_Workflow.svg"
 gallery:
-  - "../assets/rag_1.jpg"
-  - "../assets/rag_2.jpg"
+  - "../assets/DeepMind_Logo.png"
+  - "../assets/rag-graph.png"
+  - "../assets/rag-table.png"
 githubUrl: "https://github.com/JackGraymer/Advanced-GenAI"
 ---
 
 ## Project Overview
-This project was developed as a collaborative research initiative involving **ETH Zurich**, **HSLU**, and **Google DeepMind**. The goal was to build a robust Retrieval-Augmented Generation (RAG) system capable of handling complex, multilingual queries on news datasets.
+This project was developed as a collaborative research initiative involving **ETH Zurich**, **HSLU**, and **Google DeepMind**. The goal was to design an end-to-end Retrieval-Augmented Generation (RAG) assistant that answers complex, multilingual questions about ETH’s news archive while citing primary sources.
 
 ### The Problem
-Traditional keyword search often fails to capture the semantic nuance of multilingual news, while simple vector search can lack the specific entity relationships found in complex stories.
+News archives feature long-form multilingual (German and English) articles where strictly lexical search underperforms: keyword-only queries miss paraphrased facts, while naïve dense retrieval over-indexes semantically similar but contextually irrelevant passages. We needed a pipeline that (1) understands nuanced questions, (2) surfaces the exact supporting snippets, and (3) synthesizes grounded, audit-ready answers.
 
 ### Technical Approach
 
 #### 1. Data Engineering & Chunking
-The pipeline began with parsing raw HTML news articles into structured content. We implemented semantic chunking to ensure that context was preserved across boundaries, and used **GPT-4o** to generate a "Gold Standard" evaluation set of query-relevance pairs.
+- Parsed ETH news HTML into structured records, preserving language metadata and publication dates.
+- Applied hybrid chunking (Recursive Character + semantic boundaries) to keep discourse units intact.
+- Built a “gold set” of 25 benchmark questions with GPT-4o-generated relevance annotations to drive evaluation later.
 
-#### 2. Hybrid Retrieval Strategy
-To ensure maximum recall and precision, we combined three distinct methods:
-*   **BM25:** For traditional keyword matching.
-*   **Sentence-BERT:** For dense semantic vector search.
-*   **Microsoft GraphRAG:** For knowledge-graph-based entity retrieval.
+#### 2. Hybrid Retrieval & Research Agents
+- Dense backbone: multilingual `distiluse-base-multilingual-cased-v1` embeddings indexed in FAISS.
+- HyDE expansion: GPT-4o generates three hypothetical documents per query; their averaged embeddings boost recall on under-specified questions.
+- Combined standard dense scores and HyDE scores via weighted normalization to produce a 100-candidate pool per query.
 
-#### 3. Refinement & Synthesis
-Retrieved documents were processed through a **re-ranking** model to filter out noise. The final response was synthesized using an LLM aggregation strategy that cited sources and resolved contradictions across multilingual articles.
+#### 3. Post-Retrieval Refinement & Fusion
+We benchmarked seven rerankers, each optimized for a different trade-off:
+1. **EcoRank** (MiniLM→Electra cascade) for budget-aware precision.
+2. **FlagReranker v2-m3** (FP16) for multilingual robustness.
+3. **Rankify-style BGE reranker** implemented directly with Hugging Face for controllable batching.
+4. **Cohere Rerank v3.5** offloads heavy lifting to an API, providing consistent latency on weaker GPUs.
+5. **Qwen3-Reranker-4B** for LLM-grade judgments where latency is secondary.
+6. **Multislot diversity reranker** (MMR-style) to avoid redundant chunks.
+7. **Reciprocal Rank Fusion (RRF)** across the strongest trio (EcoRank, Flag, Cohere) with async execution—the fused list consistently achieved the highest Precision@10 with latency limited by the slowest component.
 
-### Project Development Phases
+#### 4. Guided Response Synthesis
+- Retrieved contexts are serialized to JSON (chunk text, source ID, publication date) and fed to GPT-4o with a system policy enforcing neutrality, concision, and JSON-only answers.
+- Model outputs both the final answer and the chunk IDs it relied on, ensuring transparent traceability.
 
-**Phase 1: Multilingual Data Engineering & Semantic Structuring**
-This stage focused on transforming raw, unstructured HTML news articles into a high-quality, retrieval-ready dataset. We utilized a hybrid parsing approach (BeautifulSoup and Docling) combined with specialized cleaning for German text (handling umlauts and compound words). Data was segmented using both Recursive Character and Semantic Chunking to maintain contextual integrity. Finally, a "Gold Standard" evaluation set was constructed using GPT-4o to assign precise relevance labels to document-query pairs.
+#### 5. Comprehensive Evaluation
+- **Automated metrics:** semantic Exact Match (MiniLM embeddings), semantic F1 (token-level cosine matching), BLEU, ROUGE-1/2/L.
+- **Human review:** 1–5 ratings for relevance, correctness, clarity across all 25 questions.
+- **Findings:** Fusion reranking lifted Precision@10 to the mid-0.7 range while EcoRank delivered the best MRR at a fraction of the latency. Human evaluators gave average scores of 4.4 (relevance), 3.7 (correctness), 4.9 (clarity); correctness dips aligned with questions whose retrieval pool lacked high-scoring ground-truth chunks.
 
-**Phase 2: Hybrid Retrieval & Research Agent Implementation**
-A sophisticated retrieval engine was designed to navigate complex news archives through multiple search paradigms. We implemented and compared three core methodologies: lexical matching (BM25), dense vector search (Bi-encoders), and Knowledge-Graph RAG (Microsoft GraphRAG) to map relationships between news entities. The system also integrated intelligent pre-retrieval logic, including query expansion and rewriting, to optimize search intent.
+### Project Phases
 
-**Phase 3: Post-Retrieval Refinement & Response Synthesis**
-To ensure high-fidelity answers, we focused on refining retrieved information through advanced re-ranking models (such as EcoRank and Set-Encoder). This solved the "lost in the middle" problem by ensuring the most relevant context appeared first. Final response generation used targeted LLM Prompt Engineering for multilingual synthesis, strictly adhering to the retrieved sources while maintaining cross-language consistency and resolving contradictions.
+**Phase 1 – Multilingual Data Engineering**  
+Established the benchmark dataset, chunk repository, and relevance annotations to ensure repeatable experimentation.
 
-**Phase 4: Comprehensive Evaluation & Performance Analysis**
-The final stage involved a multi-layered assessment of accuracy and reliability. Performance was quantified using NLP metrics like Semantic F1 Score (for meaning-based comparison) alongside BLEU and ROUGE. This was complemented by a qualitative framework assessing relevance, correctness, and clarity on a 1-5 scale. Results were visualized through statistical analysis to compare the effectiveness of configurations like standalone Vector search vs. Hybrid GraphRAG.
+**Phase 2 – Hybrid Retrieval & Research Agents**  
+Implemented dense+HyDE retrieval with on-the-fly query rewriting; stored 100-candidate pools per query for deterministic downstream testing.
+
+**Phase 3 – Post-Retrieval Refinement & Response Synthesis**  
+Evaluated multiple rerankers, introduced asynchronous RRF fusion, and handed the top-10 ranked chunks to GPT-4o with strict JSON prompts for grounded answer generation.
+
+**Phase 4 – Evaluation & Insight Extraction**  
+Compared machine metrics to human ratings, visualized metric heatmaps per question, and correlated failure cases back to retrieval coverage to guide future data augmentation.
 
 ### Results
-The hybrid approach demonstrated a significant performance gain over standalone methods. By combining GraphRAG with Vector Search, the system achieved a much higher "fact-retrieval" rate for complex investigative news queries.
+- Fusion of EcoRank + FlagReranker + Cohere improved factual hit rate on challenging “who/when” questions versus any single reranker.
+- Automated semantic F1 scores mirrored human correctness ratings except for intentionally open-ended queries, highlighting where quantitative metrics under-credit acceptable paraphrases.
+- The pipeline answered 20 of 25 benchmark questions correctly (per human judgment) and gracefully declined when evidence was missing, producing source-linked, portfolio-ready responses.

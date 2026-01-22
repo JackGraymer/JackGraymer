@@ -6,10 +6,9 @@ description: "A high-performance personal portfolio built with Astro and Tailwin
 publishDate: 2026-01-22
 category: "Full Stack"
 tags: ["Astro", "Tailwind CSS", "JavaScript", "Responsive Design"]
-thumbnail: "../assets/rag_2.jpg"
+thumbnail: "../assets/Rag-4.png"
 banner: "../assets/rag_banner.png"
 githubUrl: "https://github.com/JackGraymer"
-liveUrl: "https://alvarocervan.com"
 ---
 # Personal Portfolio
 
