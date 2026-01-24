@@ -196,6 +196,13 @@ declare module 'astro:content' {
   collection: "projects";
   data: InferEntrySchema<"projects">
 } & { render(): Render[".md"] };
+"mammut-thesis.md": {
+	id: "mammut-thesis.md";
+  slug: "mammut-thesis";
+  body: string;
+  collection: "projects";
+  data: InferEntrySchema<"projects">
+} & { render(): Render[".md"] };
 "personal-portfolio.md": {
 	id: "personal-portfolio.md";
   slug: "personal-portfolio";
