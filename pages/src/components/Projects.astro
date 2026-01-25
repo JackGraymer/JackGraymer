@@ -5,10 +5,7 @@ import { getImage } from 'astro:assets';
 const allProjects = await getCollection('projects');
 const sortedProjects = allProjects.sort((a, b) => a.data.order - b.data.order);
 
-// Helper to make paths relative
-const fixPath = (path) => path.startsWith('/') ? path.slice(1) : path;
-
-// Pre-process all images to WebP and fix paths
+// Pre-process all images to WebP
 const projects = await Promise.all(sortedProjects.map(async (project) => {
   const thumbnail = await getImage({ src: project.data.thumbnail, format: 'webp' });
   const banner = await getImage({ src: project.data.banner, format: 'webp' });
@@ -26,11 +23,11 @@ const projects = await Promise.all(sortedProjects.map(async (project) => {
   return {
     ...project,
     optimized: {
-      thumbnail: fixPath(thumbnail.src),
-      banner: fixPath(banner.src),
-      brandLogo: brandLogo ? fixPath(brandLogo.src) : null,
-      gallery: gallery.map(img => fixPath(img.src)),
-      carousel: [fixPath(banner.src), ...gallery.map(img => fixPath(img.src))]
+      thumbnail: thumbnail.src,
+      banner: banner.src,
+      brandLogo: brandLogo ? brandLogo.src : null,
+      gallery: gallery.map(img => img.src),
+      carousel: [banner.src, ...gallery.map(img => img.src)]
     }
   };
 }));
