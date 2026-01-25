@@ -7,7 +7,7 @@ description: "A high-performance end-to-end RAG system built to extract and synt
 publishDate: 2024-11-20
 category: "GenAI / NLP"
 tags: ["Python", "GenAI", "RAG", "NLP", "GraphRAG", "Vector Search", "GPT-4o"]
-thumbnail: "../assets/rag_banner.png"
+thumbnail: "..\assets\rag_banner.png"
 banner: "../assets/Evaluation_Workflow.svg"
 gallery:
   - "../assets/DeepMind_Logo.png"
