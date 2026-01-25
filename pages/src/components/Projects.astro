@@ -98,7 +98,7 @@ const projects = await Promise.all(sortedProjects.map(async (project) => {
     return (
       <div 
         id={`modal-${project.slug}`} 
-        class="project-modal fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/60 backdrop-blur-md transition-opacity duration-300 opacity-0"
+        class="project-modal fixed inset-0 z-[100] items-center justify-center p-4 bg-black/60 backdrop-blur-md transition-opacity duration-300 opacity-0"
       >
         <div class="bg-white dark:bg-gray-900 w-full max-w-5xl max-h-[90vh] rounded-3xl overflow-hidden shadow-2xl flex flex-col relative transform scale-95 transition-transform duration-300">
           
@@ -229,7 +229,7 @@ const projects = await Promise.all(sortedProjects.map(async (project) => {
 </section>
 
 <!-- Full-screen Lightbox Overlay -->
-<div id="lightbox" class="fixed inset-0 z-[200] hidden items-center justify-center bg-black/95 backdrop-blur-2xl opacity-0 transition-opacity duration-300">
+<div id="lightbox" class="fixed inset-0 z-[200] items-center justify-center bg-black/95 backdrop-blur-2xl opacity-0 transition-opacity duration-300">
   <button id="lightbox-close" class="absolute top-6 right-6 z-[220] p-4 text-white/50 hover:text-white transition-colors" aria-label="Close lightbox">
     <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -272,7 +272,11 @@ const projects = await Promise.all(sortedProjects.map(async (project) => {
     background: #334155;
   }
   
-  .project-modal.show {
+  .project-modal, #lightbox {
+    display: none;
+    opacity: 0;
+  }
+  .project-modal.show, #lightbox.show {
     display: flex;
     opacity: 1;
   }
@@ -285,12 +289,6 @@ const projects = await Promise.all(sortedProjects.map(async (project) => {
     -webkit-mask-image: -webkit-radial-gradient(white, white);
     mask-image: -webkit-radial-gradient(white, white);
     backface-visibility: hidden;
-  }
-
-  /* Lightbox Styles */
-  #lightbox.show {
-    display: flex;
-    opacity: 1;
   }
   #lightbox.show img {
     transform: scale(1);
@@ -321,226 +319,138 @@ const projects = await Promise.all(sortedProjects.map(async (project) => {
   }
 </style>
 
-<script>
-  // Modal Logic
-  const gridCards = document.querySelectorAll('[data-project-id]');
-  const modals = document.querySelectorAll('.project-modal');
-  const body = document.body;
-
-  gridCards.forEach(card => {
-    card.addEventListener('click', () => {
-      const id = card.getAttribute('data-project-id');
-      const modal = document.getElementById(`modal-${id}`);
-      if (modal) {
-        modal.classList.add('show');
-        body.style.overflow = 'hidden';
-      }
-    });
-  });
-
-  modals.forEach(modal => {
-    // Close on overlay click
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeModal(modal);
-    });
-
-    // Close Button
-    const closeBtn = modal.querySelector('.close-modal');
-    closeBtn?.addEventListener('click', () => closeModal(modal));
-  });
-
-  // Close on Escape key
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      const openModal = document.querySelector('.project-modal.show');
-      if (openModal) closeModal(openModal);
-    }
-  });
-
-  function closeModal(modal) {
-    modal.classList.remove('show');
-    body.style.overflow = '';
-  }
-
-  // Carousel Logic
-  const carousels = document.querySelectorAll('.project-carousel');
-
-  carousels.forEach(carousel => {
-    const images = JSON.parse(carousel.getAttribute('data-images') || '[]');
-    if (images.length <= 1) return;
-
-    const imgElement = carousel.querySelector('.carousel-img');
-    const dots = carousel.querySelectorAll('.indicator-dot');
-    const prevBtn = carousel.querySelector('.carousel-prev');
-    const nextBtn = carousel.querySelector('.carousel-next');
+<script is:inline>
+  // 1. Core Logic for opening/closing modals 
+  const initProjectModals = () => {
+    const body = document.body;
+    const gridCards = document.querySelectorAll('[data-project-id]');
     
-    let currentIndex = 0;
-
-    function updateCarousel(newIndex) {
-      currentIndex = (newIndex + images.length) % images.length;
-      
-      // Fade out
-      imgElement.style.opacity = '0';
-      
-      setTimeout(() => {
-        imgElement.src = images[currentIndex];
-        imgElement.style.opacity = '1';
-        
-        // Update dots
-        dots.forEach((dot, i) => {
-          if (i === currentIndex) {
-            dot.classList.add('bg-white', 'scale-125');
-            dot.classList.remove('bg-white/30');
-          } else {
-            dot.classList.remove('bg-white', 'scale-125');
-            dot.classList.add('bg-white/30');
-          }
-        });
-      }, 300);
-    }
-
-    prevBtn?.addEventListener('click', (e) => {
-      e.stopPropagation();
-      updateCarousel(currentIndex - 1);
-    });
-
-    nextBtn?.addEventListener('click', (e) => {
-      e.stopPropagation();
-      updateCarousel(currentIndex + 1);
-    });
-
-    // Keyboard navigation (only if this carousel's modal is open)
-    window.addEventListener('keydown', (e) => {
-      const modal = carousel.closest('.project-modal');
-      const lightbox = document.getElementById('lightbox');
-      if (!modal?.classList.contains('show') || lightbox?.classList.contains('show')) return;
-
-      if (e.key === 'ArrowLeft') updateCarousel(currentIndex - 1);
-      if (e.key === 'ArrowRight') updateCarousel(currentIndex + 1);
-    });
-
-    // Lightbox open trigger
-    imgElement.addEventListener('click', () => {
-      openLightbox(images, currentIndex, (newIndex) => {
-        updateCarousel(newIndex);
-      });
-    });
-  });
-
-  // Lightbox Logic
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImg = document.getElementById('lightbox-img');
-  const lightboxDots = document.getElementById('lightbox-dots');
-  const lightboxPrev = document.getElementById('lightbox-prev');
-  const lightboxNext = document.getElementById('lightbox-next');
-  const lightboxClose = document.getElementById('lightbox-close');
-
-  let lightboxImages = [];
-  let lightboxIndex = 0;
-  let onLightboxChange = null;
-
-  function openLightbox(images, index, callback) {
-    lightboxImages = images;
-    lightboxIndex = index;
-    onLightboxChange = callback;
-
-    renderLightboxDots();
-    updateLightbox(index);
-    
-    lightbox.classList.add('show');
-    body.style.overflow = 'hidden';
-  }
-
-  function renderLightboxDots() {
-    lightboxDots.innerHTML = lightboxImages.map((_, i) => `
-      <div class="lightbox-dot w-2.5 h-2.5 rounded-full transition-all duration-300 ${i === lightboxIndex ? 'bg-white scale-125' : 'bg-white/30'}" data-index="${i}"></div>
-    `).join('');
-  }
-
-  function updateLightbox(newIndex) {
-    lightboxIndex = (newIndex + lightboxImages.length) % lightboxImages.length;
-    
-    lightboxImg.style.opacity = '0';
-    lightboxImg.style.transform = 'scale(0.98)';
-    
-    setTimeout(() => {
-      lightboxImg.src = lightboxImages[lightboxIndex];
-      lightboxImg.style.opacity = '1';
-      lightboxImg.style.transform = 'scale(1)';
-      
-      const dots = lightboxDots.querySelectorAll('.lightbox-dot');
-      dots.forEach((dot, i) => {
-        if (i === lightboxIndex) {
-          dot.classList.add('bg-white', 'scale-125');
-          dot.classList.remove('bg-white/30');
-        } else {
-          dot.classList.remove('bg-white', 'scale-125');
-          dot.classList.add('bg-white/30');
-        }
-      });
-
-      if (onLightboxChange) onLightboxChange(lightboxIndex);
-    }, 150);
-  }
-
-  lightboxPrev?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    updateLightbox(lightboxIndex - 1);
-  });
-
-  lightboxNext?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    updateLightbox(lightboxIndex + 1);
-  });
-
-  lightboxClose?.addEventListener('click', () => {
-    lightbox.classList.remove('show');
-    // Keep body overflow hidden because the project modal is still open
-  });
-
-  lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox || e.target.parentElement === lightbox) {
-      lightbox.classList.remove('show');
-    }
-  });
-
-  window.addEventListener('keydown', (e) => {
-    if (!lightbox.classList.contains('show')) return;
-    
-    if (e.key === 'Escape') lightbox.classList.remove('show');
-    if (e.key === 'ArrowLeft') updateLightbox(lightboxIndex - 1);
-    if (e.key === 'ArrowRight') updateLightbox(lightboxIndex + 1);
-  });
-
-  // Background Image Preloader
-  // Collects all gallery images and preloads them AFTER the page is fully loaded
-  window.addEventListener('load', () => {
-    const preloadImages = () => {
-      const allImageUrls = new Set();
-      document.querySelectorAll('.project-carousel').forEach(carousel => {
-        const images = JSON.parse(carousel.getAttribute('data-images') || '[]');
-        images.forEach(url => allImageUrls.add(url));
-      });
-
-      // Also grab thumbnails
-      document.querySelectorAll('[data-project-id] img').forEach(img => {
-        if (img.src) allImageUrls.add(img.src);
-      });
-
-      // Preload each image by creating a non-rendered Image object
-      allImageUrls.forEach(url => {
-        const link = document.createElement('link');
-        link.rel = 'prefetch';
-        link.href = url;
-        document.head.appendChild(link);
-      });
+    const closeModal = (modal) => {
+      if (!modal) return;
+      modal.classList.remove('show');
+      body.style.overflow = '';
     };
 
-    // Wait for idle time if supported, otherwise run after a short delay
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(preloadImages, { timeout: 2000 });
-    } else {
-      setTimeout(preloadImages, 1000);
-    }
-  });
+    gridCards.forEach(card => {
+      card.onclick = () => {
+        const id = card.getAttribute('data-project-id');
+        const modal = document.getElementById('modal-' + id);
+        if (modal) {
+          modal.classList.add('show');
+          body.style.overflow = 'hidden';
+        }
+      };
+    });
+
+    document.querySelectorAll('.project-modal').forEach(modal => {
+      modal.onclick = (e) => { if (e.target === modal) closeModal(modal); };
+      modal.querySelector('.close-modal').onclick = () => closeModal(modal);
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal(document.querySelector('.project-modal.show'));
+    });
+  };
+
+  // 2. Carousel navigation logic
+  const initCarousels = () => {
+    document.querySelectorAll('.project-carousel').forEach(carousel => {
+      const imagesAttr = carousel.getAttribute('data-images');
+      if (!imagesAttr) return;
+      const images = JSON.parse(imagesAttr);
+      if (images.length <= 1) return;
+
+      const imgElement = carousel.querySelector('.carousel-img');
+      const dots = carousel.querySelectorAll('.indicator-dot');
+      const prevBtn = carousel.querySelector('.carousel-prev');
+      const nextBtn = carousel.querySelector('.carousel-next');
+      let currentIndex = 0;
+
+      const updateCarousel = (newIndex) => {
+        currentIndex = (newIndex + images.length) % images.length;
+        if (imgElement) imgElement.style.opacity = '0';
+        setTimeout(() => {
+          if (imgElement) {
+            imgElement.src = images[currentIndex];
+            imgElement.style.opacity = '1';
+          }
+          dots.forEach((dot, i) => {
+            dot.classList.toggle('bg-white', i === currentIndex);
+            dot.classList.toggle('scale-125', i === currentIndex);
+            dot.classList.toggle('bg-white/30', i !== currentIndex);
+          });
+        }, 250);
+      };
+
+      prevBtn.onclick = (e) => { e.stopPropagation(); updateCarousel(currentIndex - 1); };
+      nextBtn.onclick = (e) => { e.stopPropagation(); updateCarousel(currentIndex + 1); };
+
+      imgElement.onclick = () => {
+        if (window.openLightbox) window.openLightbox(images, currentIndex, (idx) => updateCarousel(idx));
+      };
+    });
+  };
+
+  // 3. Lightbox Logic
+  const initLightbox = () => {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxDots = document.getElementById('lightbox-dots');
+    const lightboxPrev = document.getElementById('lightbox-prev');
+    const lightboxNext = document.getElementById('lightbox-next');
+    const lightboxClose = document.getElementById('lightbox-close');
+    let currentImages = [];
+    let currentIndex = 0;
+    let updateCallback = null;
+
+    window.openLightbox = (images, index, callback) => {
+      currentImages = images;
+      currentIndex = index;
+      updateCallback = callback;
+      if (lightboxDots) {
+        lightboxDots.innerHTML = images.map((_, i) => `<div class="lightbox-dot w-2.5 h-2.5 rounded-full transition-all duration-300" data-index="${i}"></div>`).join('');
+      }
+      updateLightboxView(index);
+      lightbox.classList.add('show');
+    };
+
+    const updateLightboxView = (newIdx) => {
+      currentIndex = (newIdx + currentImages.length) % currentImages.length;
+      if (lightboxImg) lightboxImg.style.opacity = '0';
+      setTimeout(() => {
+        if (lightboxImg) {
+          lightboxImg.src = currentImages[currentIndex];
+          lightboxImg.style.opacity = '1';
+        }
+        lightboxDots.querySelectorAll('.lightbox-dot').forEach((dot, i) => {
+          dot.classList.toggle('bg-white', i === currentIndex);
+          dot.classList.toggle('scale-125', i === currentIndex);
+          dot.classList.toggle('bg-white/30', i !== currentIndex);
+        });
+        if (updateCallback) updateCallback(currentIndex);
+      }, 150);
+    };
+
+    lightboxPrev.onclick = (e) => { e.stopPropagation(); updateLightboxView(currentIndex - 1); };
+    lightboxNext.onclick = (e) => { e.stopPropagation(); updateLightboxView(currentIndex + 1); };
+    lightboxClose.onclick = () => lightbox.classList.remove('show');
+    lightbox.onclick = (e) => { if (e.target === lightbox) lightbox.classList.remove('show'); };
+  };
+
+  // 4. Background Preloader
+  const initPreloader = () => {
+    const urls = new Set();
+    document.querySelectorAll('.project-carousel').forEach(c => {
+      try { JSON.parse(c.getAttribute('data-images') || '[]').forEach(u => u && urls.add(u)); } catch(e) {}
+    });
+    setTimeout(() => {
+      urls.forEach(url => { const img = new Image(); img.src = url; });
+    }, 3000);
+  };
+
+  // Run all
+  initProjectModals();
+  initCarousels();
+  initLightbox();
+  initPreloader();
 </script>
