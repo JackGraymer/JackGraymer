@@ -511,4 +511,36 @@ const projects = await Promise.all(sortedProjects.map(async (project) => {
     if (e.key === 'ArrowLeft') updateLightbox(lightboxIndex - 1);
     if (e.key === 'ArrowRight') updateLightbox(lightboxIndex + 1);
   });
+
+  // Background Image Preloader
+  // Collects all gallery images and preloads them AFTER the page is fully loaded
+  window.addEventListener('load', () => {
+    const preloadImages = () => {
+      const allImageUrls = new Set();
+      document.querySelectorAll('.project-carousel').forEach(carousel => {
+        const images = JSON.parse(carousel.getAttribute('data-images') || '[]');
+        images.forEach(url => allImageUrls.add(url));
+      });
+
+      // Also grab thumbnails
+      document.querySelectorAll('[data-project-id] img').forEach(img => {
+        if (img.src) allImageUrls.add(img.src);
+      });
+
+      // Preload each image by creating a non-rendered Image object
+      allImageUrls.forEach(url => {
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.href = url;
+        document.head.appendChild(link);
+      });
+    };
+
+    // Wait for idle time if supported, otherwise run after a short delay
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(preloadImages, { timeout: 2000 });
+    } else {
+      setTimeout(preloadImages, 1000);
+    }
+  });
 </script>
