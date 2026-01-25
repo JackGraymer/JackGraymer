@@ -320,6 +320,60 @@ const projects = await Promise.all(sortedProjects.map(async (project) => {
 </style>
 
 <script is:inline>
+  // Global Keyboard Handler
+  window.addEventListener('keydown', (e) => {
+    const lightbox = document.getElementById('lightbox');
+    const projectModal = document.querySelector('.project-modal.show');
+    
+    // 1. Lightbox Layer (Topmost)
+    if (lightbox && lightbox.classList.contains('show')) {
+      if (e.key === 'Escape') {
+        lightbox.classList.remove('show');
+        return;
+      }
+      if (e.key === 'ArrowLeft' && window.prevLightbox) window.prevLightbox();
+      if (e.key === 'ArrowRight' && window.nextLightbox) window.nextLightbox();
+      return; // Stop here if lightbox is active
+    }
+
+    // 2. Project Modal Layer
+    if (projectModal) {
+      if (e.key === 'Escape') {
+        projectModal.classList.remove('show');
+        document.body.style.overflow = '';
+        return;
+      }
+      
+      // Find the carousel inside this specific open modal
+      const carousel = projectModal.querySelector('.project-carousel');
+      if (carousel) {
+        if (e.key === 'ArrowLeft') carousel.querySelector('.carousel-prev')?.click();
+        if (e.key === 'ArrowRight') carousel.querySelector('.carousel-next')?.click();
+      }
+
+      // 3. Scrolling Logic for Modal Content
+      const scrollContainer = projectModal.querySelector('.custom-scrollbar');
+      if (scrollContainer) {
+        const step = 150;
+        const pageStep = 400;
+        
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          scrollContainer.scrollBy({ top: step, behavior: 'smooth' });
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          scrollContainer.scrollBy({ top: -step, behavior: 'smooth' });
+        } else if (e.key === ' ' && !e.shiftKey) {
+          e.preventDefault();
+          scrollContainer.scrollBy({ top: pageStep, behavior: 'smooth' });
+        } else if (e.key === ' ' && e.shiftKey) {
+          e.preventDefault();
+          scrollContainer.scrollBy({ top: -pageStep, behavior: 'smooth' });
+        }
+      }
+    }
+  });
+
   // 1. Core Logic for opening/closing modals 
   const initProjectModals = () => {
     const body = document.body;
@@ -344,11 +398,8 @@ const projects = await Promise.all(sortedProjects.map(async (project) => {
 
     document.querySelectorAll('.project-modal').forEach(modal => {
       modal.onclick = (e) => { if (e.target === modal) closeModal(modal); };
-      modal.querySelector('.close-modal').onclick = () => closeModal(modal);
-    });
-
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeModal(document.querySelector('.project-modal.show'));
+      const closeBtn = modal.querySelector('.close-modal');
+      if (closeBtn) closeBtn.onclick = () => closeModal(modal);
     });
   };
 
@@ -382,12 +433,14 @@ const projects = await Promise.all(sortedProjects.map(async (project) => {
         }, 250);
       };
 
-      prevBtn.onclick = (e) => { e.stopPropagation(); updateCarousel(currentIndex - 1); };
-      nextBtn.onclick = (e) => { e.stopPropagation(); updateCarousel(currentIndex + 1); };
+      if (prevBtn) prevBtn.onclick = (e) => { e.stopPropagation(); updateCarousel(currentIndex - 1); };
+      if (nextBtn) nextBtn.onclick = (e) => { e.stopPropagation(); updateCarousel(currentIndex + 1); };
 
-      imgElement.onclick = () => {
-        if (window.openLightbox) window.openLightbox(images, currentIndex, (idx) => updateCarousel(idx));
-      };
+      if (imgElement) {
+        imgElement.onclick = () => {
+          if (window.openLightbox) window.openLightbox(images, currentIndex, (idx) => updateCarousel(idx));
+        };
+      }
     });
   };
 
@@ -415,6 +468,7 @@ const projects = await Promise.all(sortedProjects.map(async (project) => {
     };
 
     const updateLightboxView = (newIdx) => {
+      if (currentImages.length === 0) return;
       currentIndex = (newIdx + currentImages.length) % currentImages.length;
       if (lightboxImg) lightboxImg.style.opacity = '0';
       setTimeout(() => {
@@ -422,19 +476,24 @@ const projects = await Promise.all(sortedProjects.map(async (project) => {
           lightboxImg.src = currentImages[currentIndex];
           lightboxImg.style.opacity = '1';
         }
-        lightboxDots.querySelectorAll('.lightbox-dot').forEach((dot, i) => {
-          dot.classList.toggle('bg-white', i === currentIndex);
-          dot.classList.toggle('scale-125', i === currentIndex);
-          dot.classList.toggle('bg-white/30', i !== currentIndex);
-        });
+        if (lightboxDots) {
+          lightboxDots.querySelectorAll('.lightbox-dot').forEach((dot, i) => {
+            dot.classList.toggle('bg-white', i === currentIndex);
+            dot.classList.toggle('scale-125', i === currentIndex);
+            dot.classList.toggle('bg-white/30', i !== currentIndex);
+          });
+        }
         if (updateCallback) updateCallback(currentIndex);
       }, 150);
     };
 
-    lightboxPrev.onclick = (e) => { e.stopPropagation(); updateLightboxView(currentIndex - 1); };
-    lightboxNext.onclick = (e) => { e.stopPropagation(); updateLightboxView(currentIndex + 1); };
-    lightboxClose.onclick = () => lightbox.classList.remove('show');
-    lightbox.onclick = (e) => { if (e.target === lightbox) lightbox.classList.remove('show'); };
+    window.prevLightbox = () => updateLightboxView(currentIndex - 1);
+    window.nextLightbox = () => updateLightboxView(currentIndex + 1);
+
+    if (lightboxPrev) lightboxPrev.onclick = (e) => { e.stopPropagation(); window.prevLightbox(); };
+    if (lightboxNext) lightboxNext.onclick = (e) => { e.stopPropagation(); window.nextLightbox(); };
+    if (lightboxClose) lightboxClose.onclick = () => lightbox.classList.remove('show');
+    if (lightbox) lightbox.onclick = (e) => { if (e.target === lightbox) lightbox.classList.remove('show'); };
   };
 
   // 4. Background Preloader
