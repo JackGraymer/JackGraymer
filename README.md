@@ -5,8 +5,8 @@
 <br>
 
 <ul>
-<li><p>🔭 Recently finished my <strong>Master Thesis of Data Science at Mammut AG</strong>, working on rope quality and development research</p></li>
-<li><p>📘 Graduated with a <strong>Master's in Applied Information and Data Science</strong> at HSLU</p></li>
+<li><p>🎓 Graduated with a <strong>Master's in Applied Information and Data Science</strong> at HSLU</p></li>
+<li><p>📃 Recently finished my <strong>Master Thesis of Data Science at Mammut AG</strong>, researching rope quality and development </p></li>
 <li><p>🤖 Built an AI/ML tool at ON AG to predict customs codes for products using structured and unstructured data</p></li>
 <li><p>🌱 Continuously expanding my stack: <strong>ML, Python, R, Django, React, Node, SQL</strong></p></li>
 <li><p>👯 Looking to collaborate on impactful data-driven or full stack projects</p></li>
@@ -20,7 +20,7 @@
 </li>
 </ul>
 
-<h2>About Me</h2>
+<h2 id="about-me">About Me</h2>
 <details>
 <summary>Discover more... </summary>
 
@@ -88,7 +88,7 @@ impact.
 
 </details>
 
-<h2 id="💻-stack">💻 Stack</h2>
+<h2 id="technologies">Technologies</h2>
 <h3 id="languages">Languages</h3>
 <div align="left">
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="50" alt="Python logo"  />
