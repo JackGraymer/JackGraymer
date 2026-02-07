@@ -5,12 +5,12 @@
 <br>
 
 <ul>
-<li><p>🔭 I’m currently finishing my <strong>Master Thesis of Data Science at Mammut AG</strong>, working on quality and product development research</p></li>
-<li><p>📘 Studying a <strong>Master's in Applied Information and Data Science</strong> at HSLU</p></li>
+<li><p>🔭 Recently finished my <strong>Master Thesis of Data Science at Mammut AG</strong>, working on rope quality and development research</p></li>
+<li><p>📘 Graduated with a <strong>Master's in Applied Information and Data Science</strong> at HSLU</p></li>
 <li><p>🤖 Built an AI/ML tool at ON AG to predict customs codes for products using structured and unstructured data</p></li>
 <li><p>🌱 Continuously expanding my stack: <strong>ML, Python, R, Django, React, Node, SQL</strong></p></li>
 <li><p>👯 Looking to collaborate on impactful data-driven or full stack projects</p></li>
-<li><p>💬 Ask me about anything tech, data, or development—I love solving problems</p></li>
+<li><p>💬 Ask me about anything tech, data, or development; I love solving problems</p></li>
 <li><p>📫 How to reach me:</p>
   <ul>
     <li><strong><a href="mailto:acervancanton@gmail.com">acervancanton@gmail.com</a></strong></li>
@@ -20,67 +20,84 @@
 </li>
 </ul>
 
-
-
-<h2 id="🧔-about-me">🧔 About Me</h2>
+<h2>About Me</h2>
 <details>
 <summary>Discover more... </summary>
 
-### 🔥 Motivation
+### Motivation
 
-I've always been fascinated by computers—the infinite content, the creativity, and the power to build anything from scratch. What started as simple curiosity ("this webpage should have this feature", "this game is missing that element") evolved into a deeper desire to *create*, *optimize*, and *understand* how things work under the hood.
+I've always been fascinated by computers, the infinite content, the creativity,
+and the power to build anything from scratch. What started as simple curiosity
+("this webpage should have this feature", "this game is missing that element")
+evolved into a deeper desire to _create_, _optimize_, and _understand_ how
+things work under the hood.
 
-That curiosity matured into a passion for **Data Science**—a field where analytical thinking, problem-solving, and storytelling through data come together. Today, I use code not just to build, but to **find patterns, create models, and drive decisions** with data. 
+That curiosity matured into a passion for **Data Science**, a field where
+analytical thinking, problem-solving, and storytelling through data come
+together. Today, the objective is to **find patterns, create models, and drive
+decisions** with data that have a meaning.
 
-> "The programmers of tomorrow are the *wizards of the future.*"  
-> It is the closest thing we have to <strong>super powers.
+### From Education to Data
 
+My academic path started in a completely different field: **Sport Science** and
+**Education**. I earned a Bachelor's in Sport Science, then a Master's in
+Education, and worked as a **Physical Education teacher**. That experience
+taught me how to communicate effectively, adapt to challenges, and manage
+diverse, high-pressure environments, skills I now apply in team-based data
+projects.
 
+When I moved to **Switzerland 🇨🇭**, I decided to pivot and pursue my growing
+interest in tech. I dove into **Full Stack Web Development** through
+[The Odin Project](https://www.theodinproject.com/dashboard), an open-source
+curriculum that helped me build strong programming foundations.
 
-### 🧠 From Education to Data
+Soon after, I discovered **Data Science**, where my technical skills,
+educational background, and love for structured thinking came together
+naturally.
 
-My academic path started in a completely different field: **Sport Science** and **Education**. I earned a Bachelor's in Sport Science, then a Master's in Education, and worked as a **Physical Education teacher**. That experience taught me how to communicate effectively, adapt to challenges, and manage diverse, high-pressure environments—skills I now apply in team-based data projects.
+Today, I have graduated with a **Master’s in Applied Information and Data
+Science** from Lucerne University of Applied Sciences and Arts. My Master Thesis
+was conducted while working at **Mammut AG**, conducting real-world data
+analysis and research into product quality and innovation on new cut-resistant
+climbing ropes.
 
-When I moved to **Switzerland 🇨🇭**, I decided to pivot and pursue my growing interest in tech. I dove into **Full Stack Web Development** through [The Odin Project](https://www.theodinproject.com/dashboard), an open-source curriculum that helped me build strong programming foundations.
+### Jack of All Trades, Mastering a Niche
 
-Soon after, I discovered **Data Science**—where my technical skills, educational background, and love for structured thinking came together naturally.
-
-Today, I'm pursuing a **Master’s in Applied Information and Data Science** at Lucerne University of Applied Sciences and Arts. I'm also working at **Mammut AG**, conducting real-world data analysis and research into product quality and innovation.
-
-
-
-### 🛠️ Jack of All Trades, Mastering My Niche
-
-Before entering tech, I worked in a wide variety of roles—from teacher and translator to bike mechanic and construction worker. These experiences shaped how I approach challenges: creatively, practically, and with grit.
+Before entering tech, I worked in a wide variety of roles, from teacher and
+translator to bike mechanic and construction. These experiences shaped how I
+approach challenges: creatively, practically, and with grit.
 
 Here’s a glimpse of the journey that shaped me:
 
-- 📊 Master's thesis on climbing rope innovation and quality testing at Mammut AG
-- 🤖 Data Science Intern at ON AG — building ML tools to optimize customs processes  
-- 🏃 Physical Education Teacher  
-- 🌍 Exchange student in **Australia**, **Switzerland** and **Slovenia**  
-- 🛠️ Software translator, kitchen assistant, bike mechanic  
-- 💻 Open-source contributor and self-taught web developer  
+- 📊 Master's thesis on climbing rope innovation and quality testing at Mammut
+  AG
+- 🤖 Data Science Intern at ON AG - building ML tools to optimize customs
+  processes
+- 🏃 Physical Education Teacher
+- 🌍 Exchange student in **Australia**, **Switzerland** and **Slovenia**
+- 🛠️ Software translator, kitchen assistant, bike mechanic
+- 💻 Open-source contributor and self-taught web developer
 
-Each role gave me transferable skills—whether it's attention to detail, cross-cultural communication, or hands-on problem-solving—that I now channel into data science projects.
+Each role gave me transferable skills, whether it's attention to detail,
+cross-cultural communication, or hands-on problem-solving, that I now channel
+into data science projects.
 
-
-
-Today, I’m focused on becoming a **well-rounded, technically strong, and insight-driven Data Scientist**—bridging the gap between raw data and real-world impact.
+Today, I’m focused on becoming a **well-rounded, technically strong, and
+insight-driven Data Scientist** bridging the gap between raw data and real-world
+impact.
 
 </details>
-
 
 <h2 id="💻-stack">💻 Stack</h2>
 <h3 id="languages">Languages</h3>
 <div align="left">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="50" alt="Python logo"  />
+  <img width="12" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/r/r-original.svg" height="50" alt="Python logo"  />
+  <img width="12" />
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" height="50" alt="javascript logo"  />
   <img width="12" />
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="50" alt="Typescript logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="50" alt="Python logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/r/r-original.svg" height="50" alt="Python logo"  />
   <img width="12" />
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" height="50" alt="html5 logo"  />
   <img width="12" />
@@ -109,10 +126,10 @@ Today, I’m focused on becoming a **well-rounded, technically strong, and insig
   <img width="12" />
   <img src="https://cdn.simpleicons.org/astro/FF5D01" height="50" alt="astro logo"  />
   <img width="12" />
-  <img src="https://skillicons.dev/icons?i=pug" height="50" alt="pug logo"  />
+  <!--<img src="https://skillicons.dev/icons?i=pug" height="50" alt="pug logo"  />
   <img width="12" />
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jest/jest-plain.svg" height="50" alt="jest logo"  />
-  <img width="12" />
+  <img width="12" />-->
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" height="50" alt="mysql logo"  />
   <img width="12" />
   <img src="https://cdn.simpleicons.org/mongodb/47A248" height="50" alt="mongodb logo"  />
@@ -121,7 +138,6 @@ Today, I’m focused on becoming a **well-rounded, technically strong, and insig
   <img width="12" />
   <img src="https://cdn.simpleicons.org/bootstrap/7952B3" height="50" alt="bootstrap logo"  />
   <img width="12" />
-  <img src="https://www.vectorlogo.zone/logos/picocss/picocss-icon.svg" height="50" alt="pico css logo"  />
 </div>
 
 <br>
@@ -141,23 +157,6 @@ Today, I’m focused on becoming a **well-rounded, technically strong, and insig
   <img src="https://raw.githubusercontent.com/microsoft/PowerBI-Icons/refs/heads/main/PNG/Power-BI.png" height="50" alt="PowerBI logo"  />
   <img width="12" />
   <img src="https://www.svgrepo.com/show/354428/tableau-icon.svg" height="50" alt="tableau logo"  />
-</div>
-
-<br>
-
-<h2 id="📈-stats">📈 Stats</h2>
-<div align=center>
-  
-<!--[![GitHub Streak](https://streak-stats.demolab.com?user=jackgraymer&theme=dark&border_radius=5&date_format=j%20M%5B%20Y%5D)](https://git.io/streak-stats)-->
-
-<img src="https://streak-stats.demolab.com?user=jackgraymer&theme=dark&border_radius=5&date_format=j%20M%5B%20Y%5D" alt="GitHub Streak" />
-
-<br>
- 
-<br>
-
-<img height="250" src="https://github-readme-stats-jackgraymer.vercel.app/api/top-langs/?username=jackgraymer&layout=compact&custom_title=Most%20used%20languages&langs_count=10&include_all_commits=true&hide_progress=false&hide_border=false&theme=dark&hide=">
-
 </div>
 
 <!--
