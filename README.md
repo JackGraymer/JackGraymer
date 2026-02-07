@@ -1,6 +1,7 @@
 <p align="center"><img src="https://api.careers.fresenius.com/images/3cba469c-79f7-41bf-981f-ac84a5de8130/6235fee522e168619018ab77051f806ed7b932a976540e80b4e0ca659523df855b02a8cb-e3a2ab78919001b546dc83e16e4dcfcf1df8b95c2d1472dd"></p>
 <h1 align="center">Hi 👋, I'm Alvaro</h1>
 <h3 align="center">Data Scientist & Full Stack Developer based in Switzerland 🇨🇭</h3>
+<h3 align='center'> Find more on my <a target='blank' href='https://jackgraymer.github.io/JackGraymer/#' ><strong>Portfolio Website </strong></a></h3>
 
 <br>
 
